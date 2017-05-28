@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-commons-annotations-4.0.5.Final.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-core-4.3.7.Final.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jandex-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-logging-3.1.3.GA.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-logging-annotations-1.2.0.Beta1.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-transaction-api_1.2_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.34-bin.jar"/>
+	<classpathentry kind="lib" path="lib/tango-icon.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/jsoup-1.7.3.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/log4j-1.2.13.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/poi-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/poi-examples-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/poi-excelant-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/poi-ooxml-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/poi-ooxml-schemas-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/poi-scratchpad-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/sqlite-jdbc-3.8.11.2.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libpoeandjgroups/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/autocomplete-2.5.8.jar"/>
+	<classpathentry kind="lib" path="lib/rsyntaxtextarea-2.5.8.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
