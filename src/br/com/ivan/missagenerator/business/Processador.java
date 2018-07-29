@@ -49,6 +49,21 @@ public class Processador {
 	private static JSONArray jsonArray;
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
+		String searchMusic = "eu navegarei";
+		
+		ArrayList<String> returnArr = new ArrayList<String>();
+		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br+" + searchMusic).get();
+		Elements links = jsoupDoc.select("a[href]");
+		for (Element link : links) {
+			String strLink = link.attr("abs:href");
+			if(strLink.startsWith("https://www.letras.mus.br")){
+				System.out.println(strLink);
+				returnArr.add(strLink);
+			}
+		}
+	}
+	
+	public static void main3(String[] args) throws FileNotFoundException, IOException {
 		Document jsoupDoc = Jsoup.connect("http://liturgia.cancaonova.com/").get();
 		Elements links = jsoupDoc.select("a[href]");
 		for (Element link : links) {
@@ -92,6 +107,20 @@ public class Processador {
 		for (Element link : links) {
 			String strLink = link.attr("abs:href");
 			if(strLink.startsWith("https://www.cifraclub.com.br")){
+				returnArr.add(strLink);
+			}
+		}
+		return returnArr;
+	}
+	
+	
+	public static ArrayList<String> pesquisarLinksLetras(String searchMusic) throws IOException{
+		ArrayList<String> returnArr = new ArrayList<String>();
+		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br" + searchMusic).get();
+		Elements links = jsoupDoc.select("a[href]");
+		for (Element link : links) {
+			String strLink = link.attr("abs:href");
+			if(strLink.startsWith("https://www.letras.mus.br")){
 				returnArr.add(strLink);
 			}
 		}
