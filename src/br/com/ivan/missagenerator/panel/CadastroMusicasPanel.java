@@ -404,9 +404,13 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		String url = txtLinkMusica.getText();
 		try {
 			String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(url);
-			txtCifraMusica.setText(cifra0eApresentacao1Nome2[0]);
-			txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
-			txtNomeMusica.setText(cifra0eApresentacao1Nome2[2]);
+			if (url.contains("https://www.letras.mus.br")){
+				txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
+			} else {
+				txtCifraMusica.setText(cifra0eApresentacao1Nome2[0]);
+				txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
+				txtNomeMusica.setText(cifra0eApresentacao1Nome2[2]);
+			}
 			txtCifraMusica.setCaretPosition(0);
 			txtApresentacao.setCaretPosition(0);
 			if(exibirMensagem){
@@ -725,6 +729,9 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 				try {
 					if(((Momento)cboMomentos.getSelectedItem()).getNome().equalsIgnoreCase("salmo")){
 						return Processador.pesquisarSalmo();
+					}
+					if(txtLinkMusica.getText().startsWith("$")) {
+						return Processador.pesquisarLinksLetras(txtLinkMusica.getText());
 					}
 					return Processador.pesquisarLinks(txtLinkMusica.getText());
 				} catch (IOException e) {

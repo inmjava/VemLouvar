@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -48,8 +47,23 @@ public class Processador {
 
 	private static JSONArray jsonArray;
 	
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		String searchMusic = "eu navegarei";
+	public static void main(String[] args) throws IOException {
+		String url = "https://www.letras.mus.br/cancao-nova/169358/";
+		Document jsoupDoc = Jsoup.connect(url).get();
+		String musicaTexto = "";
+		for (Element paragrafo : jsoupDoc.select(".cnt-letra p")) {
+			for (String linha : paragrafo.html().split("<br />")) {
+				musicaTexto += paragrafo.html(linha).text() + "\n";
+			}
+			musicaTexto += "\n";
+		}
+		System.out.println(musicaTexto);
+	}
+	
+	public static void main4(String[] args) throws FileNotFoundException, IOException {
+		String searchMusic = "$eu navegarei";
+		
+		System.out.println(searchMusic.startsWith("$"));
 		
 		ArrayList<String> returnArr = new ArrayList<String>();
 		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br+" + searchMusic).get();
@@ -116,7 +130,7 @@ public class Processador {
 	
 	public static ArrayList<String> pesquisarLinksLetras(String searchMusic) throws IOException{
 		ArrayList<String> returnArr = new ArrayList<String>();
-		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br" + searchMusic).get();
+		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br+" + searchMusic).get();
 		Elements links = jsoupDoc.select("a[href]");
 		for (Element link : links) {
 			String strLink = link.attr("abs:href");
@@ -152,6 +166,16 @@ public class Processador {
 				musicaCifra += type.text() + "\n";
 			}
 			musicaApresentacao = jsoupDoc.select(".tab-pane#liturgia-2 p").get(1).text();
+		} else if (url.contains("https://www.letras.mus.br")){
+			String musicaTexto = "";
+			for (Element paragrafo : jsoupDoc.select(".cnt-letra p")) {
+				for (String linha : paragrafo.html().split("<br />")) {
+					musicaTexto += paragrafo.html(linha).text() + "\n";
+				}
+				musicaTexto += "\n";
+				musicaApresentacao = musicaTexto;
+			}
+			return new String[] { "", musicaApresentacao, "" };
 		} else {
 			musicaApresentacao = jsoupDoc.select("pre").text();
 			musicaCifra = jsoupDoc.select("pre").text();
