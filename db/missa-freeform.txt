@@ -1,11 +1,11 @@
 0:   128:  Interiorização:      Teus planos
-2:   194:  Entrada:             Vamos celebrar
-3:   21:   Ato Penitencial:     Kyrie Eleison (Como a ovelha perdida)
+2:   194:  Entrada:             Vamos celebrar (D)
+3:   21:   Ato Penitencial:     Kyrie Eleison (Como a ovelha perdida) (G)
 4:   31:   Glória:              Glória a Deus Nas Alturas - Eliana Ribeiro
 5:   313:  Salmo:               Sl 118
-6:   186:  Aclamação:           Vai Falar No Evangelho 
-7:   311:  Ofertório:           Venho Senhor Oferecer 
+6:   186:  Aclamação:           Vai Falar No Evangelho (D)
+7:   311:  Ofertório:           Venho Senhor Oferecer (Em)
 8:   212:  Santo:               Nosso Deus Senhor É Santo 
-17:  309:  Cordeiro:            Cordeiro de Deus - Amor e Adoração
-2:   172:  Entrada:             Já é tempo de Amar
+17:  309:  Cordeiro:            Cordeiro de Deus - Amor e Adoração (G)
+2:   172:  Entrada:             Já é tempo de Amar 
 9:   314:  Comunhão:            Corpo Santo

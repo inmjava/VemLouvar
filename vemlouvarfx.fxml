@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="22.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar" />
+      <TextField layoutX="102.0" layoutY="22.0" prefHeight="39.0" prefWidth="493.0" />
+      <Button layoutX="873.0" layoutY="21.0" mnemonicParsing="false" text="Cifra" />
+      <Button layoutX="719.0" layoutY="21.0" mnemonicParsing="false" text="Apresentação" />
+      <Button layoutX="617.0" layoutY="21.0" mnemonicParsing="false" text="Música" />
+      <TextArea layoutX="22.0" layoutY="117.0" prefHeight="400.0" prefWidth="290.0" />
+      <TextArea layoutX="335.0" layoutY="117.0" prefHeight="400.0" prefWidth="290.0" />
+      <TextArea layoutX="650.0" layoutY="117.0" prefHeight="400.0" prefWidth="290.0" />
+   </children>
+</Pane>
