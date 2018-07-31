@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="20.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisa" />
+      <TextField layoutX="96.0" layoutY="17.0" prefHeight="31.0" prefWidth="406.0" />
+      <Button layoutX="517.0" layoutY="17.0" mnemonicParsing="false" text="Cifra" />
+      <Button layoutX="601.0" layoutY="17.0" mnemonicParsing="false" text="Apresentação" />
+      <Button layoutX="752.0" layoutY="17.0" mnemonicParsing="false" text="Música" />
+      <TextArea layoutX="20.0" layoutY="114.0" prefHeight="325.0" prefWidth="244.0" />
+      <TextArea layoutX="312.0" layoutY="121.0" prefHeight="325.0" prefWidth="244.0" />
+      <TextArea layoutX="584.0" layoutY="121.0" prefHeight="325.0" prefWidth="244.0" />
+      <Text layoutX="20.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Momento" />
+      <TextField layoutX="118.0" layoutY="68.0" prefHeight="31.0" prefWidth="301.0" />
+      <Text layoutX="434.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
+      <TextField layoutX="517.0" layoutY="68.0" prefHeight="31.0" prefWidth="311.0" />
+      <Button layoutX="26.0" layoutY="460.0" mnemonicParsing="false" text="Nova Música" />
+      <Button layoutX="578.0" layoutY="460.0" mnemonicParsing="false" text="Gerar PPT" />
+      <Button layoutX="578.0" layoutY="508.0" mnemonicParsing="false" text="Gerar DOCX" />
+      <Button layoutX="706.0" layoutY="460.0" mnemonicParsing="false" text="Salvar Missa" />
+      <Button layoutX="23.0" layoutY="508.0" mnemonicParsing="false" text="Salvar Música" />
+      <Button layoutX="189.0" layoutY="460.0" mnemonicParsing="false" text="Refrão+" />
+      <Button layoutX="189.0" layoutY="508.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Refrão-" />
+      <Button layoutX="299.0" layoutY="460.0" mnemonicParsing="false" text="Quebrar" />
+      <Button layoutX="299.0" layoutY="508.0" mnemonicParsing="false" text="Ligar Linhas" />
+      <Button layoutX="410.0" layoutY="460.0" mnemonicParsing="false" text="Auto Organizar" />
+   </children>
+</Pane>
