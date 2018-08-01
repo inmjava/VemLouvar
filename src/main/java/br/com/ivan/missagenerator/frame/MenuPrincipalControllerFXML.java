@@ -4,9 +4,16 @@
 
 package br.com.ivan.missagenerator.frame;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
+
+import br.com.ivan.missagenerator.business.Processador;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -38,14 +45,26 @@ public class MenuPrincipalControllerFXML {
     @FXML // fx:id="txtApresentacao"
     private TextArea txtApresentacao; // Value injected by FXMLLoader
 
+	private AutoCompletionBinding<String> bindAutoCompletion;
+
+	private void gerarAutoComplete(Collection<String> opcoesComplete) {
+		if(bindAutoCompletion != null) {
+			bindAutoCompletion.dispose();
+		}
+		bindAutoCompletion = TextFields.bindAutoCompletion(txtPesquisa, opcoesComplete);
+		bindAutoCompletion.setMinWidth(500);
+    	txtPesquisa.setText("");
+    	txtPesquisa.requestFocus();
+	}
+
     @FXML
-    void pesquisarCifra(ActionEvent event) {
-    	txtPesquisa.setText("Isso é um teste");
+    void pesquisarCifra(ActionEvent event) throws IOException {
+    	gerarAutoComplete(Processador.pesquisarLinks(txtPesquisa.getText()));
     }
 
     @FXML
-    void pesquisarApresentacao(ActionEvent event) {
-
+    void pesquisarApresentacao(ActionEvent event) throws IOException {
+    	gerarAutoComplete(Processador.pesquisarLinksLetras(txtPesquisa.getText()));
     }
 
     @FXML
