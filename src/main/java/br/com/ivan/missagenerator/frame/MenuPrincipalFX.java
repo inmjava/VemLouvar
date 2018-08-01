@@ -19,9 +19,9 @@ public class MenuPrincipalFX extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/vemlouvarfreeform.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("vemlouvarfreeform.fxml"));
 		
-		Scene scene = new Scene(root, 853, 597);
+		Scene scene = new Scene(root, 900, 700);
 
 		stage.setTitle("FXML Welcome");
 		stage.setScene(scene);
