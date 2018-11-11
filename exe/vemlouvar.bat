@@ -1,1 +1,2 @@
-jre\bin\java.exe -cp .;resources;vemlouvarrest-0.0.1-SNAPSHOT.jar;lib\* br.com.inmjava.springboot.Application
+jre\bin\java.exe -cp .;resources;db;icon;images;lib\*;template br.com.ivan.missagenerator.frame.MenuPrincipal
+pause

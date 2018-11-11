@@ -215,6 +215,16 @@
 												<include name="**/*.*" />
 											</fileset>
 										</copy>
+										<copy todir="exe/lib" flatten="true">
+											<fileset dir="diretoriocompilacao">
+												<include name="*.jar" />
+											</fileset>
+										</copy>
+										<copy todir="exe">
+											<fileset dir="src/main">
+												<include name="resources/**" />
+											</fileset>
+										</copy>
 										<copy todir="exe/db">
 											<fileset dir="db">
 												<include name="**/*.*" />
