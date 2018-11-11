@@ -279,7 +279,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
-					"Houve um erro durante a opera��o \"Carga M�sicas por Momento\", detalhes tecnicos: "
+					"Houve um erro durante a operação \"Carga Músicas por Momento\", detalhes tecnicos: "
 							+ e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
 			// TODO Auto-generated catch block
@@ -321,11 +321,11 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		try {
 			musicaDao.excluir(musica);
 			cboMusicas.removeItem(musica);
-			JOptionPane.showMessageDialog(this, "A m�sica foi exclu�das com sucesso", "Informa��o",
+			JOptionPane.showMessageDialog(this, "A música foi excluída com sucesso", "Informação",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
-					"Houve um erro durante a opera��o \"Excluir\", detalhes tecnicos: " + e.getLocalizedMessage(),
+					"Houve um erro durante a operação \"Excluir\", detalhes tecnicos: " + e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -355,11 +355,11 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			} else {
 				musicaDao.alterar(m);
 			}
-			JOptionPane.showMessageDialog(this, "A m�sica foi salva com sucesso", "Informa��o",
+			JOptionPane.showMessageDialog(this, "A música foi salva com sucesso", "Informação",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
-					"Houve um erro durante a opera��o \"Salvar\", detalhes tecnicos: " + e.getLocalizedMessage(),
+					"Houve um erro durante a operação \"Salvar\", detalhes tecnicos: " + e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
@@ -377,12 +377,12 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 				txtCifraMusica.setCaretPosition(0);
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(this,
-						"Houve um na conex�o com a URL:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
+						"Houve um na conexão com a URL:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
 						"ERRO", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
-					"Houve um na conex�o ao tentar processar o texto: " + e.getLocalizedMessage(),
+					"Houve um na conexão ao tentar processar o texto: " + e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -414,12 +414,12 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			txtCifraMusica.setCaretPosition(0);
 			txtApresentacao.setCaretPosition(0);
 			if(exibirMensagem){
-				JOptionPane.showMessageDialog(this, "M�sica processada com sucesso, n�o se esque�a de salvar...",
-						"Informa��o", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Música processada com sucesso, não se esqueça de salvar...",
+						"Informação", JOptionPane.INFORMATION_MESSAGE);
 			}
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this,
-					"Houve um na conex�o com a URL:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
+					"Houve um na conexão com a URL:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -470,7 +470,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 					filtrar();
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(CadastroMusicasPanel.this,
-							"Houve um erro durante a opera��o \"Filtrar momentos\", detalhes tecnicos: "
+							"Houve um erro durante a operação \"Filtrar momentos\", detalhes tecnicos: "
 									+ e1.getLocalizedMessage(),
 							"ERRO", JOptionPane.ERROR_MESSAGE);
 				}
@@ -604,7 +604,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		
 		carregarAutoComplete();
 		
-		JButton btnBuscar = new JButton("Pr�xima Cifra");
+		JButton btnBuscar = new JButton("Próxima Cifra");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				index++;
