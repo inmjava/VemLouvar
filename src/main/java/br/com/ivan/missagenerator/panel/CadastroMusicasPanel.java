@@ -53,6 +53,55 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	private int index;
 	private String textoPesquisa;
 	private MenuPrincipal menuPrincipal;
+	
+	
+	public static void main(String[] args) {
+		String teste = "";
+		teste += "Tem muita gente\n";
+		teste += "Que não percebe\n";
+		teste += "O quanto Deus tem anos dar\n";
+		teste += "Não acreditam\n";
+		teste += "Em suas preces\n";
+		teste += "E estão sempre prontos a falhar\n";
+		teste += "\n";
+		teste += "Porque você\n";
+		teste += "Não tenta ser\n";
+		teste += "De maneira que Deus quer\n";
+		teste += "Tenha coragem de dar-lhe a vida\n";
+		teste += "E tudo, tudo que você tiver\n";
+		teste += "\n";
+		teste += "Faça um teste\n";
+		teste += "E largue o mundo agora\n";
+		teste += "Ele vai dar tudo novo pra você\n";
+		teste += "Faça um teste\n";
+		teste += "E largue o mundo agora\n";
+		teste += "Ele vai dar tudo novo pra você\n";
+		teste += "Esqueça do mal\n";
+		teste += "E quando menos perceber\n";
+		teste += "Cristo vai dar tudo novo pra você\n";
+		teste += "\n";
+		teste += "Saiba que o reino de Jesus Cristo\n";
+		teste += "Não é somente pra você\n";
+		teste += "Compartilhando de sua vida\n";
+		teste += "Você logo vai saber\n";
+		teste += "\n";
+		teste += "Cristo vai dar tudo\n";
+		teste += "Ele vai dar tudo\n";
+		teste += "Tudo novo pra você\n";
+		
+		algoritimoAutoOrganizar(teste);
+		
+		//System.out.println(teste);
+
+	}
+
+	private static void algoritimoAutoOrganizar(String teste) {
+		String[] linhas = teste.split("\n\n");
+		for (String linha : linhas) {
+			System.out.println(linha.replace("\n", " \\ "));
+		}
+		
+	}
 
 	public void refreshValues() throws Exception {
 		carregarMomentos();
@@ -71,6 +120,10 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	}
 	
 	private void autoOrganizar(){
+		JOptionPane.showMessageDialog(this,
+				"Há!",
+				"Info", JOptionPane.INFORMATION_MESSAGE);
+
 		
 	}
 
@@ -673,6 +726,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		JButton btnAutoOrganizar = new JButton("Auto Organizar");
 		btnAutoOrganizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				autoOrganizar();
 			}
 		});
 		panel.add(btnAutoOrganizar);
