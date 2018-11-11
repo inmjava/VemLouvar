@@ -171,7 +171,7 @@
 		<profile>
 			<id>generateJar</id>
 			<build>
-				<directory>vemlouvarrest</directory>
+				<directory>diretoriocompilacao</directory>
 				<resources>
 					<resource>
 						<directory>src</directory>
@@ -211,31 +211,26 @@
 								<configuration>
 									<tasks>
 										<copy todir="exe/lib" flatten="true">
-											<fileset dir="vemlouvarrest/lib">
+											<fileset dir="diretoriocompilacao/lib">
 												<include name="**/*.*" />
 											</fileset>
 										</copy>
-										<copy todir="exe/" flatten="true">
-											<fileset dir="vemlouvarrest">
-												<include name="vemlouvarrest*.jar" />
+										<copy todir="exe/">
+											<fileset dir="db">
+												<include name="**/*.*" />
 											</fileset>
 										</copy>
-										<copy todir="exe/" flatten="true">
-											<fileset dir=".">
-												<include name="missa.db" />
+										<copy todir="exe/">
+											<fileset dir="icon">
+												<include name="**/*.*" />
 											</fileset>
 										</copy>
-										<copy todir="exe">
-											<fileset dir="src/main">
-												<include name="resources/**" />
+										<copy todir="exe/">
+											<fileset dir="images">
+												<include name="**/*.*" />
 											</fileset>
 										</copy>
-										<copy todir="exe">
-											<fileset dir="src/main/resources">
-												<include name="templates/**" />
-											</fileset>
-										</copy>
-										<delete dir="vemlouvarrest" />
+										<delete dir="diretoriocompilacao" />
 									</tasks>
 								</configuration>
 								<goals>
