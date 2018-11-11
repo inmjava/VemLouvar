@@ -12,8 +12,8 @@ hs_err_pid*
 /.settings/
 /bin/
 /target/
-lib
-libpoeandjgroups
-VemLouvar.jar
 /.project
 /.classpath
+/exe/*
+!/exe/jre
+!/exe/vemlouvar.bat

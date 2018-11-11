@@ -215,18 +215,23 @@
 												<include name="**/*.*" />
 											</fileset>
 										</copy>
-										<copy todir="exe/">
+										<copy todir="exe/db">
 											<fileset dir="db">
 												<include name="**/*.*" />
 											</fileset>
 										</copy>
-										<copy todir="exe/">
+										<copy todir="exe/icon">
 											<fileset dir="icon">
 												<include name="**/*.*" />
 											</fileset>
 										</copy>
-										<copy todir="exe/">
+										<copy todir="exe/images">
 											<fileset dir="images">
+												<include name="**/*.*" />
+											</fileset>
+										</copy>
+										<copy todir="exe/template">
+											<fileset dir="template">
 												<include name="**/*.*" />
 											</fileset>
 										</copy>
