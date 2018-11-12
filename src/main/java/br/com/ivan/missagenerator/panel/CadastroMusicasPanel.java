@@ -55,7 +55,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	private MenuPrincipal menuPrincipal;
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String teste = "";
 		teste += "Tem muita gente\n";
 		teste += "Que não percebe\n";
@@ -89,17 +89,51 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		teste += "Ele vai dar tudo\n";
 		teste += "Tudo novo pra você\n";
 		
-		algoritimoAutoOrganizar(teste);
+		teste = Processador.getCifra0EApresentacao1Nome2("https://www.letras.mus.br/maria-do-rosario/1229878/")[1];
+
+		System.out.println(teste);
+		System.out.println("============================");
 		
-		//System.out.println(teste);
+		teste = new CadastroMusicasPanel(null).algoritimoAutoOrganizar(teste);
+		
+		System.out.println(teste);
 
 	}
 
-	private static void algoritimoAutoOrganizar(String teste) {
-		String[] linhas = teste.split("\n\n");
-		for (String linha : linhas) {
-			System.out.println(linha.replace("\n", " \\ "));
+	private String algoritimoAutoOrganizar(String musica) {
+		int maxlinesize = 100;
+		String linhaFinal = "";
+		String linhaTemporaria = "";
+		
+		musica = musica.replaceAll("\r", "");
+		
+		String[] blocos = musica.split("\n\n");
+		for (String bloco : blocos) {
+			boolean finalizouUmaLinha = false;
+			String[] linhas = bloco.split("\n");
+			for (String linha : linhas) {
+				
+				if((linhaTemporaria+linha).length() < maxlinesize) {
+					linhaTemporaria = removerPontuacaoDepois(linhaTemporaria) + (linhaTemporaria.equals("") ? "" : " / ") + Processador.primeiraMaiuscula(removerPontuacaoAntes(linha));
+				} else {
+					finalizouUmaLinha = true;
+					linhaFinal += "\n" + linhaTemporaria;
+					linhaTemporaria = linha;
+				}
+			}
+			
+			if(finalizouUmaLinha && linhaTemporaria.length() < (maxlinesize/2)) {
+				linhaFinal = removerPontuacaoDepois(linhaFinal) + (linhaFinal.equals("") ? "" : " / ") + Processador.primeiraMaiuscula(removerPontuacaoAntes(linhaTemporaria));
+			} else {
+				linhaFinal += "\n" + linhaTemporaria;
+				
+			}
+			linhaTemporaria = "";
+			linhaFinal += "\n";
 		}
+		
+		
+		return linhaFinal.trim();
 		
 	}
 
@@ -120,11 +154,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	}
 	
 	private void autoOrganizar(){
-		JOptionPane.showMessageDialog(this,
-				"Há!",
-				"Info", JOptionPane.INFORMATION_MESSAGE);
-
-		
+		txtApresentacao.setText(algoritimoAutoOrganizar(txtApresentacao.getText()));
 	}
 
 	private void ligarLinhas(JTextArea jtx) {
@@ -265,6 +295,9 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	}
 
 	private String removerPontuacaoDepois(String textoDepoisLinha) {
+		if(textoDepoisLinha.equals("")) {
+			return "";
+		}
 		char firstChar = textoDepoisLinha.charAt(0);
 		while (!Character.isLetter(firstChar)) {
 			textoDepoisLinha = textoDepoisLinha.substring(1);
