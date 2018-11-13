@@ -29,14 +29,11 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.hibernate.common/hibernate-commons-annotations -->
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>4.3.7.Final</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
 		<dependency>
 			<groupId>org.hibernate.common</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
@@ -158,8 +155,6 @@
 			<artifactId>rsyntaxtextarea</artifactId>
 			<version>2.5.8</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.tango-project/tango-icon-theme -->
 		<dependency>
 			<groupId>org.tango-project</groupId>
 			<artifactId>tango-icon-theme</artifactId>
@@ -228,6 +223,7 @@
 										<copy todir="exe/db">
 											<fileset dir="db">
 												<include name="**/*.*" />
+												<exclude name="missa_*" />
 											</fileset>
 										</copy>
 										<copy todir="exe/icon">

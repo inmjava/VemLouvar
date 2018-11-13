@@ -70,8 +70,6 @@ public class MenuPrincipal extends JFrame {
 			case NomePanel.PESQUISAR_MUSICA:
 				panelQual = new PesquisarMusicaPanel(this);
 				break;
-			
-				
 			}
 			panelQual.refreshValues();
 			this.setContentPane((JPanel)panelQual);
