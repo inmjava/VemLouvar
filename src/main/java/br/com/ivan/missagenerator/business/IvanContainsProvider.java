@@ -12,6 +12,7 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
@@ -31,12 +32,11 @@ public class IvanContainsProvider extends DefaultCompletionProvider{
 				Completion c = completions.get(index);
 				
 				String str1 = Normalizer.normalize(c.getInputText(), Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-				str1 = StringUtils.stripAccents(str1).toUpperCase();
 				String str2 = Normalizer.normalize(text, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-				str2 = StringUtils.stripAccents(str2).toUpperCase();
-			    
-				if (Stream.of(str2.split(" ")).allMatch(str1::contains)) {
-					String finalInputText = "<html>"+c.getInputText().replaceAll("(?i)"+text, "<b>$0</b>")+"</html>";
+				
+				String retorno = marcarPosicoes(str2, str1);
+				if (retorno != null) {
+					String finalInputText = "<html>"+retorno+"</html>";
 					retVal.add(new ShorthandCompletion(c.getProvider(), finalInputText, c.getReplacementText()));
 				}
 				index++;
@@ -68,13 +68,35 @@ public class IvanContainsProvider extends DefaultCompletionProvider{
 	
 	public static void main(String[] args) {
 		
-		String str1 = "proclamam céu TERRA".toUpperCase();
-		String str2 = "Santo - Santo, santo, santo - Santo, santo, santo (bis) / Senhor Deus do Universo (bis) / O céu e a terra proclamam a vossa gloria (bis)".toUpperCase();
+		String str1 = "proclamam ceu TERRA";
+		String str2 = "Hosana nos terra altos céus atenção proclamam";
 		
-		if (Stream.of(str1.split(" ")).allMatch(str2::contains)) {
-			System.out.println("ok");
+		
+		marcarPosicoes(str1, str2);
+	}
+
+
+	private static String marcarPosicoes(String str1, String str2) {
+		String str2Upp = StringUtils.stripAccents(str2.toUpperCase());
+		String str1Upp = StringUtils.stripAccents(str1.toUpperCase());
+		
+		if (Stream.of(str1Upp.split(" ")).allMatch(str2Upp::contains)) {
+			String[] words = str1Upp.split(" ");
+			String str2Stripado = StringUtils.stripAccents(str2);
+			for (String word : words) {
+				str2Stripado = str2Stripado.replaceAll("(?i)"+word, "<b>$0</b>");
+			}
+//			int i = str2Stripado.indexOf("<b>");
+//			int j = str2Stripado.indexOf("</b>");
+//			while (i > 0) {
+//				str2 = str2.substring(0, i) + "<b>" + str2.substring(i);
+//				str2 = str2.substring(0, j) + "</b>" + str2.substring(j);
+//				i = str2Stripado.indexOf("<b>", i + 1);
+//				j = str2Stripado.indexOf("</b>", j + 1);
+//			}
+			return str2Stripado;
 		} else {
-			System.out.println("nok");
+			return null;
 		}
 	}
 	
