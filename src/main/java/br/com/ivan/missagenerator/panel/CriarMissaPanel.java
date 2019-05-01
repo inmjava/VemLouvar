@@ -91,7 +91,7 @@ public class CriarMissaPanel extends JPanel implements Painel {
 			
 			JButton btnNewButton_3 = new JButton("Nova M\u00FAsica");
 			btnNewButton_3.setEnabled(false);
-			btnNewButton_3.setIcon(new ImageIcon(CriarMissaPanel.class.getResource("/actions/document-new.png")));
+			btnNewButton_3.setIcon(new ImageIcon(CriarMissaPanel.class.getResource("/org/tango-project/tango-icon-theme/16x16/actions/document-new.png")));
 			GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
 			gbc_btnNewButton_3.gridx = 2;
 			gbc_btnNewButton_3.gridy = i;

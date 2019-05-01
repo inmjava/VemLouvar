@@ -321,11 +321,11 @@ public class MusicaMomentoPanel extends JPanel implements Painel {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		btnAdd = new JButton("");
-		btnAdd.setIcon(new ImageIcon(MusicaMomentoPanel.class.getResource("/actions/go-last.png")));
+		btnAdd.setIcon(new ImageIcon(MusicaMomentoPanel.class.getResource("/org/tango-project/tango-icon-theme/16x16/actions/go-last.png")));
 		panel.add(btnAdd);
 		
 		btnRemove = new JButton("");
-		btnRemove.setIcon(new ImageIcon(MusicaMomentoPanel.class.getResource("/actions/go-first.png")));
+		btnRemove.setIcon(new ImageIcon(MusicaMomentoPanel.class.getResource("/org/tango-project/tango-icon-theme/16x16/actions/go-first.png")));
 		panel.add(btnRemove);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();

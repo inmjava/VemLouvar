@@ -48,8 +48,15 @@ public class Processador {
 	private static JSONArray jsonArray;
 	
 	public static void main(String[] args) throws IOException {
+		String url = "https://www.cifraclub.com.br/aline-brasil/colisao/imprimir.html";
+		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
+		
+		System.out.println(jsoupDoc.toString());
+	}
+	
+	public static void main5(String[] args) throws IOException {
 		String url = "https://www.letras.mus.br/cancao-nova/169358/";
-		Document jsoupDoc = Jsoup.connect(url).get();
+		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
 		String musicaTexto = "";
 		for (Element paragrafo : jsoupDoc.select(".cnt-letra p")) {
 			for (String linha : paragrafo.html().split("<br />")) {
@@ -153,9 +160,10 @@ public class Processador {
 		}
 		return returnArr;
 	}
+	
 
 	public static String[] getCifra0EApresentacao1Nome2(String url) throws IOException {
-		Document jsoupDoc = Jsoup.connect(url).get();
+		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
 		String musicaApresentacao = "";
 		String musicaCifra = "";
 		String nome = "";

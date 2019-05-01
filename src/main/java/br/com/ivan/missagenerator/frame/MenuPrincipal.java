@@ -79,6 +79,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "ERRO: " + e.getLocalizedMessage());
+			e.printStackTrace();
 		}
 		return (JPanel) panelQual;
 	}

@@ -463,8 +463,10 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 				txtCifraMusica.setCaretPosition(0);
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(this,
-						"Houve um na conexão com a URL:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
+						"Houve um na conexão com a URL 1:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
 						"ERRO", JOptionPane.ERROR_MESSAGE);
+						
+					e.printStackTrace();
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
@@ -505,8 +507,9 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			}
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this,
-					"Houve um na conexão com a URL:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
+					"Houve um na conexão com a URL 2:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
 		}
 	}
 
