@@ -1,11 +1,10 @@
-0:   128:  Interiorização:      Teus planos
-2:   194:  Entrada:             Vamos celebrar
-3:   21:   Ato Penitencial:     Kyrie Eleison (Como a ovelha perdida)
-4:   31:   Glória:              Glória a Deus Nas Alturas - Eliana Ribeiro
-5:   313:  Salmo:               Sl 118
-6:   186:  Aclamação:           Vai Falar No Evangelho 
-7:   311:  Ofertório:           Venho Senhor Oferecer 
-8:   212:  Santo:               Nosso Deus Senhor É Santo 
-17:  309:  Cordeiro:            Cordeiro de Deus - Amor e Adoração
-2:   172:  Entrada:             Já é tempo de Amar
-9:   314:  Comunhão:            Corpo Santo
+2:   315:  Entrada:             Eis o Tempo de Conversão 
+3:   351:  Ato Penitencial:     Perdoa-me - Comunidade Shalom
+5:   362:  Salmo:               Sl 68 — Respondei-me pelo vosso imenso amor, neste tempo favorável, Senhor Deus.
+6:   348:  Aclamação:           Jesus Cristo Sois Bendito
+7:   100:  Ofertório:           Sê Bendito Senhor Para Sempre (Campanha da Fraternidade) (Cm)
+8:   360:  Santo:               Santo Capella
+17:  337:  Cordeiro:            Cordeiro: C, D, E
+9:   178:  Comunhão:            Eu Vim Para Que Todos Tenham Vida 
+11:  182:  Final:               Consagração a Nossa Senhora (A)
+2:   347:  Entrada:             Hino da Campanha da Fraternidade 2019
