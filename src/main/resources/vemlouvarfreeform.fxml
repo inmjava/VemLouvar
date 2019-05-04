@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ivan.missagenerator.frame.MenuPrincipalControllerFXML">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox prefHeight="558.0" prefWidth="877.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefWidth="780.0" spacing="10.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisa">
+                     <HBox.margin>
+                        <Insets top="4.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField id="txtPesquisa" fx:id="txtPesquisa" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#pesquisarCifra" text="Cifra" />
+                  <Button mnemonicParsing="false" onAction="#pesquisarApresentacao" text="Apresentação" />
+                  <Button mnemonicParsing="false" onAction="#pesquisarMusica" text="Música" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefWidth="780.0" spacing="10.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Momento">
+                     <HBox.margin>
+                        <Insets top="4.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField id="txtMomento" fx:id="txtMomento" HBox.hgrow="ALWAYS" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
+                     <HBox.margin>
+                        <Insets top="4.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField id="txtNome" fx:id="txtNome" HBox.hgrow="ALWAYS" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefWidth="200.0">
+               <children>
+                  <BorderPane prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <center>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cifra" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <BorderPane prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <center>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Apresentação" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <BorderPane prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <center>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Missa" BorderPane.alignment="CENTER" />
+                     </center>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </BorderPane>
+               </children>
+            </HBox>
+            <HBox prefWidth="780.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <TextArea id="txtCifra" fx:id="txtCifra" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <TextArea id="txtApresentacao" fx:id="txtApresentacao" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <TextArea id="txtMissa" fx:id="txtMissa" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <HBox prefWidth="200.0" spacing="10.0" VBox.vgrow="NEVER">
+               <children>
+                  <BorderPane prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <left>
+                        <VBox prefWidth="130.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#novaMusica" text="Nova Música" VBox.vgrow="ALWAYS" />
+                              <Button mnemonicParsing="false" onAction="#salvarMusica" text="Salvar Música" />
+                           </children>
+                        </VBox>
+                     </left>
+                     <right>
+                        <VBox alignment="TOP_RIGHT" prefWidth="130.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#refraoMais" text="Refrão+" />
+                              <Button mnemonicParsing="false" onAction="#refraoMenos" text="Refrão-" />
+                           </children>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </VBox>
+                     </right>
+                  </BorderPane>
+                  <BorderPane prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <left>
+                        <VBox prefWidth="130.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#quebrarLinhas" text="Quebrar Linhas" />
+                              <Button mnemonicParsing="false" onAction="#ligarLinhas" text="Ligar Linhas" />
+                           </children>
+                        </VBox>
+                     </left>
+                     <right>
+                        <VBox alignment="TOP_RIGHT" prefWidth="130.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#autoOrganizar" text="Auto Organizar" />
+                           </children>
+                        </VBox>
+                     </right>
+                  </BorderPane>
+                  <BorderPane prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <left>
+                        <VBox prefWidth="130.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#gerarPpt" text="Gerar PPT" />
+                              <Button mnemonicParsing="false" onAction="#gerarDocx" text="Gerar DOCX" />
+                           </children>
+                        </VBox>
+                     </left>
+                     <right>
+                        <VBox alignment="TOP_RIGHT" prefWidth="130.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#gravarMissa" text="Gravar Missa" />
+                           </children>
+                        </VBox>
+                     </right>
+                  </BorderPane>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
