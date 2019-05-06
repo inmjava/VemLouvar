@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.swing.text.BadLocationException;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -135,7 +137,7 @@ public class AutoCompleteTextArea extends TextArea {
 			item.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent actionEvent) {
-					AtualizarLinha(result);
+					replaceLineContent(result);
 					entriesPopup.hide();
 				}
 			});
@@ -150,7 +152,22 @@ public class AutoCompleteTextArea extends TextArea {
 		return Arrays.asList("PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO");
 	}
 
-	private void AtualizarLinha(final String result) {
-		setText(result);
+	private void replaceLineContent(final String result) {
+		String str = getText();
+		int posicaoCursor = this.getCaretPosition();
+		int lineStartOffset = getLineStartOffset(posicaoCursor);
+		int lineEndOffset = getLineEndOffset(posicaoCursor);
+		setText(str.substring(0, lineStartOffset) + result + str.substring(lineEndOffset));
+		positionCaret(posicaoCursor + result.length() - 1);
+	}
+	
+	private int getLineStartOffset(int caretPosition) {
+		int lineStartOffset = this.getText().substring(0, caretPosition).lastIndexOf("\n");
+		return lineStartOffset == -1 ? 0 : lineStartOffset + 1;
+	}
+	
+	private int getLineEndOffset(int caretPosition) {
+		int lineEndOffSet = this.getText().substring(caretPosition).indexOf("\n");
+		return (lineEndOffSet == -1 ? getText().length() : lineEndOffSet + caretPosition);
 	}
 }
