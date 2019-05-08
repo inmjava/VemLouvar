@@ -1,13 +1,12 @@
 package br.com.ivan.missagenerator.frame.javafx;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import javax.swing.text.BadLocationException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.Skin;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -48,33 +48,51 @@ public class AutoCompleteTextArea extends TextArea {
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.SPACE && event.isControlDown()) {
-					if (getText().length() == 0) {
-						entriesPopup.hide();
-					} else {
-						List<String> searchResult = getListaDeSugestoes();
-						if (entries.size() > 0) {
-							populatePopup(searchResult);
-							if (!entriesPopup.isShowing()) {
-								Path caret = findCaret(AutoCompleteTextArea.this);
-								Point2D screenLoc = findScreenLocation(caret);
-								entriesPopup.show(AutoCompleteTextArea.this, screenLoc.getX(), screenLoc.getY() + 20);
-							}
-						} else {
-							entriesPopup.hide();
-						}
+					makeAutocomplete();
+				}
+				if (event.getCode() == KeyCode.ENTER) {
+					if (entriesPopup.isShowing()) {
+						entriesPopup.fireEvent(null);
 					}
+					
 				}
 			}
 		});
 
-		focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean,
-					Boolean aBoolean2) {
+//		focusedProperty().addListener(new ChangeListener<Boolean>() {
+//			@Override
+//			public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean,
+//					Boolean aBoolean2) {
+//				entriesPopup.hide();
+//			}
+//		});
+
+	}
+
+	private void makeAutocomplete() {
+		if (getText().length() == 0) {
+			entriesPopup.hide();
+		} else {
+			List<String> searchResult = getListaDeSugestoes();
+			if (entries.size() > 0) {
+				populatePopup(searchResult);
+				if (!entriesPopup.isShowing()) {
+					Path caret = findCaret(AutoCompleteTextArea.this);
+					Point2D screenLoc = findScreenLocation(caret);
+					entriesPopup.show(AutoCompleteTextArea.this, screenLoc.getX(), screenLoc.getY() + 20);
+					Skin<?> skin = entriesPopup.getSkin();
+					if (skin != null) {
+						Node fstItem = skin.getNode().lookup(".menu-item");
+						if (fstItem != null) {
+							fstItem.requestFocus();
+							entriesPopup.requestFocus();
+						}
+					}
+				}
+			} else {
 				entriesPopup.hide();
 			}
-		});
-
+		}
 	}
 
 	private Path findCaret(Parent parent) {
@@ -149,7 +167,19 @@ public class AutoCompleteTextArea extends TextArea {
 	}
 
 	private List<String> getListaDeSugestoes() {
-		return Arrays.asList("PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO");
+		
+		Random random = new Random();
+		int max = 10;
+		int min = 1;
+		int i2 = random.nextInt(max - min + 1) + min;
+		List<String> lista = new ArrayList<String>();
+		
+		for (int i = 0; i <i2; i++) {
+			lista.add("elemento " + (i + 1));
+		}
+		
+		return lista;
+//		return Arrays.asList("PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO");
 	}
 
 	private void replaceLineContent(final String result) {
@@ -158,14 +188,14 @@ public class AutoCompleteTextArea extends TextArea {
 		int lineStartOffset = getLineStartOffset(posicaoCursor);
 		int lineEndOffset = getLineEndOffset(posicaoCursor);
 		setText(str.substring(0, lineStartOffset) + result + str.substring(lineEndOffset));
-		positionCaret(posicaoCursor + result.length() - 1);
+		positionCaret(lineStartOffset + result.length());
 	}
-	
+
 	private int getLineStartOffset(int caretPosition) {
 		int lineStartOffset = this.getText().substring(0, caretPosition).lastIndexOf("\n");
 		return lineStartOffset == -1 ? 0 : lineStartOffset + 1;
 	}
-	
+
 	private int getLineEndOffset(int caretPosition) {
 		int lineEndOffSet = this.getText().substring(caretPosition).indexOf("\n");
 		return (lineEndOffSet == -1 ? getText().length() : lineEndOffSet + caretPosition);

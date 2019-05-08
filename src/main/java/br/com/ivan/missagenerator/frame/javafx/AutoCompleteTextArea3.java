@@ -10,25 +10,21 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Skin;
+import javafx.scene.control.TextArea;
 
-/**
- * This class is a TextField which implements an "autocomplete" functionality,
- * based on a supplied list of entries.
- * 
- * @author Caleb Brinkman
- */
-public class AutoCompleteTextField extends TextField {
+public class AutoCompleteTextArea3 extends TextArea{
 	/** The existing autocomplete entries. */
 	private final SortedSet<String> entries;
 	/** The popup used to select an entry. */
 	private ContextMenu entriesPopup;
 
 	/** Construct a new AutoCompleteTextField. */
-	public AutoCompleteTextField() {
+	public AutoCompleteTextArea3() {
 		super();
 		entries = new TreeSet<>();
 		entriesPopup = new ContextMenu();
@@ -43,7 +39,15 @@ public class AutoCompleteTextField extends TextField {
 					if (entries.size() > 0) {
 						populatePopup(searchResult);
 						if (!entriesPopup.isShowing()) {
-							entriesPopup.show(AutoCompleteTextField.this, Side.BOTTOM, 0, 0);
+							entriesPopup.show(AutoCompleteTextArea3.this, Side.BOTTOM, 0, 0);
+							Skin<?> skin = entriesPopup.getSkin();
+							if (skin != null) {
+								Node fstItem = skin.getNode().lookup(".menu-item");
+								if (fstItem != null) {
+									fstItem.requestFocus();
+									entriesPopup.requestFocus();
+								}
+							}
 						}
 					} else {
 						entriesPopup.hide();
