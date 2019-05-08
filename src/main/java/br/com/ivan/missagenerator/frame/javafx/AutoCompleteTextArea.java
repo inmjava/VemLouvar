@@ -48,13 +48,36 @@ public class AutoCompleteTextArea extends TextArea {
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.SPACE && event.isControlDown()) {
-					makeAutocomplete();
+					if (getText().length() == 0) {
+						entriesPopup.hide();
+					} else {
+						List<String> searchResult = getListaDeSugestoes();
+						searchResult.addAll(entries.subSet(getText(), getText() + Character.MAX_VALUE));
+						if (entries.size() > 0) {
+							populatePopup(searchResult);
+							if (!entriesPopup.isShowing()) {
+								Path caret = findCaret(AutoCompleteTextArea.this);
+								Point2D screenLoc = findScreenLocation(caret);
+								entriesPopup.show(AutoCompleteTextArea.this, screenLoc.getX(), screenLoc.getY() + 20);
+								Skin<?> skin = entriesPopup.getSkin();
+								if (skin != null) {
+									Node fstItem = skin.getNode().lookup(".menu-item");
+									if (fstItem != null) {
+										fstItem.requestFocus();
+										entriesPopup.requestFocus();
+									}
+								}
+							}
+						} else {
+							entriesPopup.hide();
+						}
+					}
 				}
 				if (event.getCode() == KeyCode.ENTER) {
 					if (entriesPopup.isShowing()) {
 						entriesPopup.fireEvent(null);
 					}
-					
+
 				}
 			}
 		});
@@ -70,29 +93,6 @@ public class AutoCompleteTextArea extends TextArea {
 	}
 
 	private void makeAutocomplete() {
-		if (getText().length() == 0) {
-			entriesPopup.hide();
-		} else {
-			List<String> searchResult = getListaDeSugestoes();
-			if (entries.size() > 0) {
-				populatePopup(searchResult);
-				if (!entriesPopup.isShowing()) {
-					Path caret = findCaret(AutoCompleteTextArea.this);
-					Point2D screenLoc = findScreenLocation(caret);
-					entriesPopup.show(AutoCompleteTextArea.this, screenLoc.getX(), screenLoc.getY() + 20);
-					Skin<?> skin = entriesPopup.getSkin();
-					if (skin != null) {
-						Node fstItem = skin.getNode().lookup(".menu-item");
-						if (fstItem != null) {
-							fstItem.requestFocus();
-							entriesPopup.requestFocus();
-						}
-					}
-				}
-			} else {
-				entriesPopup.hide();
-			}
-		}
 	}
 
 	private Path findCaret(Parent parent) {
@@ -167,17 +167,17 @@ public class AutoCompleteTextArea extends TextArea {
 	}
 
 	private List<String> getListaDeSugestoes() {
-		
+
 		Random random = new Random();
 		int max = 10;
 		int min = 1;
 		int i2 = random.nextInt(max - min + 1) + min;
 		List<String> lista = new ArrayList<String>();
-		
-		for (int i = 0; i <i2; i++) {
+
+		for (int i = 0; i < i2; i++) {
 			lista.add("elemento " + (i + 1));
 		}
-		
+
 		return lista;
 //		return Arrays.asList("PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO", "PRIMEIRA SUGESTAOOOO");
 	}
