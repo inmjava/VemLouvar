@@ -5,6 +5,9 @@
 7:   100:  Ofertório:           Sê Bendito Senhor Para Sempre (Campanha da Fraternidade) (Cm)
 8:   360:  Santo:               Santo Capella
 17:  337:  Cordeiro:            Cordeiro: C, D, E
+16:  272:  MFJ:                 O Céu Se Abre
 9:   178:  Comunhão:            Eu Vim Para Que Todos Tenham Vida 
 11:  182:  Final:               Consagração a Nossa Senhora (A)
 2:   347:  Entrada:             Hino da Campanha da Fraternidade 2019
+
+

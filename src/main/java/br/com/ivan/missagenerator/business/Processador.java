@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -48,10 +49,21 @@ public class Processador {
 	private static JSONArray jsonArray;
 	
 	public static void main(String[] args) throws IOException {
-		String url = "https://www.cifraclub.com.br/aline-brasil/colisao/imprimir.html";
+		Processador.getSalmoLinks();
+	}
+	
+	public static List<String> getSalmoLinks() throws IOException{
+		String url = "https://liturgia.cancaonova.com/pb/";
 		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
-		
-		System.out.println(jsoupDoc.toString());
+
+		Elements elements = jsoupDoc.select("#wp-calendar tbody tr td a");
+		ArrayList<String> links = new ArrayList<>();
+		for (Element e : elements) {
+			String link = e.attr("href");
+			System.out.println(link);
+			links.add(link);
+		}
+		return links;
 	}
 	
 	public static void main5(String[] args) throws IOException {

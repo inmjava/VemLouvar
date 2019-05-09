@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JRadioButton;
 
 public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 
@@ -50,6 +51,10 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	private JTextArea txtApresentacao;
 	private AutoCompletion ac;
 	private int linhaSelecionada;
+	private JRadioButton rdbtnLocal;
+	private JRadioButton rdbtnCifra;
+	private JRadioButton rdbtnLetra;
+	private JRadioButton rdbtnSalmo;
 
 	/**
 	 * Create the panel.
@@ -59,10 +64,50 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	public MissaFreeFormPlusPanel(MenuPrincipal menuPrincipal) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
+		
+		JPanel panel_1 = new JPanel();
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 0;
+		add(panel_1, gbc_panel_1);
+		
+		rdbtnLocal = new JRadioButton("local");
+		rdbtnLocal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				local();
+			}
+		});
+		panel_1.add(rdbtnLocal);
+		
+		rdbtnCifra = new JRadioButton("cifra");
+		rdbtnCifra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cifra();
+			}
+		});
+		panel_1.add(rdbtnCifra);
+		
+		rdbtnLetra = new JRadioButton("letra");
+		rdbtnLetra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				letra();
+			}
+		});
+		panel_1.add(rdbtnLetra);
+		
+		rdbtnSalmo = new JRadioButton("salmo");
+		rdbtnSalmo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				salmo();
+			}
+		});
+		panel_1.add(rdbtnSalmo);
 
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setResizeWeight(0.7);
@@ -70,7 +115,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		gbc_splitPane.insets = new Insets(0, 0, 5, 0);
 		gbc_splitPane.fill = GridBagConstraints.BOTH;
 		gbc_splitPane.gridx = 0;
-		gbc_splitPane.gridy = 0;
+		gbc_splitPane.gridy = 1;
 		add(splitPane, gbc_splitPane);
 
 		txtCifra = new RSyntaxTextArea(20, 60);
@@ -89,7 +134,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		gbc_textArea.insets = new Insets(0, 0, 5, 0);
 		gbc_textArea.fill = GridBagConstraints.BOTH;
 		gbc_textArea.gridx = 0;
-		gbc_textArea.gridy = 1;
+		gbc_textArea.gridy = 2;
 		add(new JScrollPane(txtMissa), gbc_textArea);
 
 		JPanel panel = new JPanel();
@@ -97,7 +142,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		gbc_panel.anchor = GridBagConstraints.SOUTH;
 		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 2;
+		gbc_panel.gridy = 3;
 		add(panel, gbc_panel);
 
 		JButton btnNewButton = new JButton("Gerar PPT");
@@ -256,5 +301,57 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		txtCifra.setCaretPosition(0);
 		txtMissa.requestFocus();
 	}
+	
+	private void local() {
+		rdbtnCifra.setSelected(false);
+		rdbtnLetra.setSelected(false);
+		rdbtnSalmo.setSelected(false);
+	}
+	
+	private void cifra() {
+		rdbtnLocal.setSelected(false);
+		rdbtnLetra.setSelected(false);
+		rdbtnSalmo.setSelected(false);
+	}
+	
+	private void letra() {
+		rdbtnLocal.setSelected(false);
+		rdbtnCifra.setSelected(false);
+		rdbtnSalmo.setSelected(false);
+	}
+	
+	private void salmo() {
+		rdbtnLocal.setSelected(false);
+		rdbtnCifra.setSelected(false);
+		rdbtnLetra.setSelected(false);
+		
+		gerarAutoCompleteSalmo();
+	}
+
+	private void gerarAutoCompleteSalmo() {
+
+//		Collection<Momento> momentos = null;
+//		MomentoDao momentoDao = MomentoDaoFactory.createMomentoDao();
+//		momentos = momentoDao.listar();
+//
+//		DefaultCompletionProvider provider = new IvanContainsProvider();
+//		for (Momento m : momentos) {
+//			List<Musica> musicas = momentoDao.listarMusicas(m);
+//			for (Musica musica : musicas) {
+//				String textoMusica = StringUtils.rightPad(m.getId() + ":", 5)
+//						+ StringUtils.rightPad(musica.getId() + ":", 5) + " "
+//						+ StringUtils.rightPad(m.getNome() + ":", 20) + " "
+//						+ StringUtils.rightPad(musica.getNome() + "", 0);
+//				provider.addCompletion(new ShorthandCompletion(provider,
+//						m.getNome() + " - " + musica.getNome() + " - " + musica.getApresentacao(), textoMusica));
+//			}
+//		}
+//		ac = new AutoCompletion(provider);
+//		ac.install(txtMissa);
+		
+	}
+	
+	
+	
 
 }
