@@ -69,14 +69,14 @@ public class IvanContainsProvider extends DefaultCompletionProvider{
 	public static void main(String[] args) {
 		
 		String str1 = "proclamam ceu TERRA";
-		String str2 = "Hosana nos terra altos céus atenção proclamam";
+		String str2 = "Hosana nos terra altos cï¿½us atenï¿½ï¿½o proclamam";
 		
 		
 		marcarPosicoes(str1, str2);
 	}
 
 
-	private static String marcarPosicoes(String str1, String str2) {
+	public static String marcarPosicoes(String str1, String str2) {
 		String str2Upp = StringUtils.stripAccents(str2.toUpperCase());
 		String str1Upp = StringUtils.stripAccents(str1.toUpperCase());
 		

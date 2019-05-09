@@ -22,6 +22,7 @@ import br.com.ivan.missagenerator.panel.CadastroMomentos;
 import br.com.ivan.missagenerator.panel.CadastroMusicasPanel;
 import br.com.ivan.missagenerator.panel.CriarMissaPanel;
 import br.com.ivan.missagenerator.panel.MissaFreeForm;
+import br.com.ivan.missagenerator.panel.MissaFreeFormPlusPanel;
 import br.com.ivan.missagenerator.panel.MusicaMomentoPanel;
 import br.com.ivan.missagenerator.panel.NomePanel;
 import br.com.ivan.missagenerator.panel.PesquisarMusicaPanel;
@@ -39,7 +40,7 @@ public class MenuPrincipal extends JFrame {
 			public void run() {
 				try {
 					MenuPrincipal frame = new MenuPrincipal();
-					frame.abrirPanel(NomePanel.FAZER_MISSA2);
+					frame.abrirPanel(NomePanel.FAZER_MISSA3);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,6 +64,9 @@ public class MenuPrincipal extends JFrame {
 				break;
 			case NomePanel.FAZER_MISSA2:
 				panelQual = new MissaFreeForm(this);
+				break;
+			case NomePanel.FAZER_MISSA3:
+				panelQual = new MissaFreeFormPlusPanel(this);
 				break;
 			case NomePanel.MUSICA_MOMENTO:
 				panelQual = new MusicaMomentoPanel(this);

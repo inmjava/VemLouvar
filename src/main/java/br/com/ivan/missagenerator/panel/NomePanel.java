@@ -7,5 +7,6 @@ public interface NomePanel {
 	public static int MUSICA_MOMENTO = 3;
 	public static int FAZER_MISSA2 = 4;
 	public static int PESQUISAR_MUSICA = 5;
+	public static int FAZER_MISSA3 = 7;
 
 }
