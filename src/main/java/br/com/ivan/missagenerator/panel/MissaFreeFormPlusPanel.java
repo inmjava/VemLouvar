@@ -18,6 +18,9 @@ import javax.swing.text.DefaultHighlighter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.fife.ui.autocomplete.AutoCompletion;
+import org.fife.ui.autocomplete.AutoCompletionEvent;
+import org.fife.ui.autocomplete.AutoCompletionEvent.Type;
+import org.fife.ui.autocomplete.AutoCompletionListener;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -330,6 +333,33 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 
 	private void gerarAutoCompleteSalmo() {
 
+		List<String> salmoLinks;
+		try {
+			salmoLinks = Processador.getSalmoLinks();
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		
+		DefaultCompletionProvider provider = new DefaultCompletionProvider();
+		
+		for (String linkSalmo : salmoLinks) {
+			provider.addCompletion(new ShorthandCompletion(provider, linkSalmo, linkSalmo));
+		}
+
+		ac = new AutoCompletion(provider);
+		ac.install(txtMissa);
+		ac.addAutoCompletionListener(new AutoCompletionListener() {
+			
+			@Override
+			public void autoCompleteUpdate(AutoCompletionEvent e) {
+				if(e.getEventType().equals(Type.POPUP_HIDDEN)) {
+					buscarSalmo();
+				}
+			}
+		});
+		
+		
 //		Collection<Momento> momentos = null;
 //		MomentoDao momentoDao = MomentoDaoFactory.createMomentoDao();
 //		momentos = momentoDao.listar();
@@ -352,6 +382,34 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	}
 	
 	
+	private void buscarSalmo() {
+		try {
+			String url = getConteudoLinhaSelecionada();
+			String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(url);
+			txtApresentacao.setText(url);
+			txtCifra.setText(cifra0eApresentacao1Nome2[0]);
+			txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 	
+	
+	private String getConteudoLinhaSelecionada(){
+		try {
+			int posicaoCursor = txtMissa.getCaretPosition();
+			int numLinha = txtMissa.getLineOfOffset(posicaoCursor);
+			int cursorInicioLinha = txtMissa.getLineStartOffset(numLinha);
+			int cursorFimLinha = txtMissa.getLineEndOffset(numLinha);
+			
+			return txtMissa.getText().substring(cursorInicioLinha, cursorFimLinha);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 
 }

@@ -60,7 +60,7 @@ public class Processador {
 		ArrayList<String> links = new ArrayList<>();
 		for (Element e : elements) {
 			String link = e.attr("href");
-			System.out.println(link);
+//			System.out.println(link);
 			links.add(link);
 		}
 		return links;
