@@ -1,4 +1,4 @@
-package br.com.ivan.missagenerator.business;
+package br.com.ivan.missagenerator.business.provider;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
@@ -12,7 +12,6 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.util.StringUtil;
 import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
@@ -56,24 +55,33 @@ public class IvanContainsProvider extends DefaultCompletionProvider{
 		int index = root.getElementIndex(dot);
 		Element elem = root.getElement(index);
 		int start = elem.getStartOffset();
+
+		int end = elem.getEndOffset();
+		if(dot < end -1) {
+			dot = end -1;
+			comp.setCaretPosition(dot);
+		}
+		
 		int len = dot-start;
+		
 		try {
 			doc.getText(start, len, seg);
 		} catch (BadLocationException ble) {
 			ble.printStackTrace();
 			return EMPTY_STRING;
 		}
+		System.out.println(seg.toString());
 		return seg.toString();
 	}
 	
-	public static void main(String[] args) {
-		
-		String str1 = "proclamam ceu TERRA";
-		String str2 = "Hosana nos terra altos c�us aten��o proclamam";
-		
-		
-		marcarPosicoes(str1, str2);
-	}
+//	public static void main(String[] args) {
+//		
+//		String str1 = "proclamam ceu TERRA";
+//		String str2 = "Hosana nos terra altos c�us aten��o proclamam";
+//		
+//		
+//		marcarPosicoes(str1, str2);
+//	}
 
 
 	public static String marcarPosicoes(String str1, String str2) {

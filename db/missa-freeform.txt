@@ -1,13 +1,4 @@
-2:   315:  Entrada:             Eis o Tempo de Conversão 
-3:   351:  Ato Penitencial:     Perdoa-me - Comunidade Shalom
-5:   362:  Salmo:               Sl 68 — Respondei-me pelo vosso imenso amor, neste tempo favorável, Senhor Deus.
-6:   348:  Aclamação:           Jesus Cristo Sois Bendito
-7:   100:  Ofertório:           Sê Bendito Senhor Para Sempre (Campanha da Fraternidade) (Cm)
-8:   360:  Santo:               Santo Capella
-17:  337:  Cordeiro:            Cordeiro: C, D, E
-16:  272:  MFJ:                 O Céu Se Abre
-9:   178:  Comunhão:            Eu Vim Para Que Todos Tenham Vida 
-11:  182:  Final:               Consagração a Nossa Senhora (A)
-2:   347:  Entrada:             Hino da Campanha da Fraternidade 2019
+-1:  -1:   naoselecionado:      :                                                 https://liturgia.cancaonova.com/pb/liturgia/2a-semana-da-pascoa-quinta-feira-2/?sDia=2&sMes=05&sAno=2019
+-1:  -1:   naoselecionado:      :                                                 https://liturgia.cancaonova.com/pb/liturgia/2a-semana-da-pascoa-sexta-feira-2/?sDia=3&sMes=05&sAno=2019
 
-
+-1:  -1:   naoselecionado:      :                                                 https://liturgia.cancaonova.com/pb/liturgia/2a-semana-da-pascoa-quarta-feira-2/?sDia=1&sMes=05&sAno=2019

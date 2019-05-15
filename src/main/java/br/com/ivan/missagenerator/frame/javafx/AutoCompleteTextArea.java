@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.fife.ui.autocomplete.ShorthandCompletion;
-
-import br.com.ivan.missagenerator.business.IvanContainsProvider;
+import br.com.ivan.missagenerator.business.provider.IvanContainsProvider;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
