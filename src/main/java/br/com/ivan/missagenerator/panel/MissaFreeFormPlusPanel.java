@@ -9,11 +9,14 @@ import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -38,6 +41,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import br.com.ivan.missagenerator.business.Processador;
 import br.com.ivan.missagenerator.business.provider.IvanContainsProvider;
+import br.com.ivan.missagenerator.business.provider.MomentoContainsProvider;
 import br.com.ivan.missagenerator.business.provider.SalmoContainsProvider;
 import br.com.ivan.missagenerator.frame.MenuPrincipal;
 import br.com.ivan.missagenerator.frame.Painel;
@@ -64,6 +68,8 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	private String strCifra = "Cifra";
 	private String strSalmo = "Salmo";
 	private String strLetra = "Letra";
+	private String strMomento = "Momento";
+	private JRadioButton rdbtnMomento;
 
 	/**
 	 * Create the panel.
@@ -126,6 +132,26 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 			}
 		});
 		panel_1.add(rdbtnSalmo);
+
+		rdbtnMomento = new JRadioButton(strMomento);
+		rdbtnMomento.setMnemonic(KeyEvent.VK_M);
+		rdbtnMomento.setActionCommand(strSalmo);
+		rdbtnMomento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				momento();
+			}
+		});
+		panel_1.add(rdbtnMomento);
+		
+
+	    //Group the radio buttons.
+	    ButtonGroup group = new ButtonGroup();
+	    group.add(rdbtnInterno);
+	    group.add(rdbtnCifra);
+	    group.add(rdbtnLetra);
+	    group.add(rdbtnSalmo);
+	    group.add(rdbtnMomento);
+		
 
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setResizeWeight(0.7);
@@ -193,8 +219,8 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		carregarMissaSalva();
 		carregarMusicas();
 		makeInput();
-		txtMissa.requestDefaultFocus();
 		txtMissa.requestFocus();
+		setCursorInicioLinha();
 	}
 
 	private void makeInput() {
@@ -356,30 +382,16 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	}
 
 	private void interno() {
-		rdbtnCifra.setSelected(false);
-		rdbtnLetra.setSelected(false);
-		rdbtnSalmo.setSelected(false);
 		txtMissa.requestFocus();
 	}
 
 	private void cifra() {
-		rdbtnInterno.setSelected(false);
-		rdbtnLetra.setSelected(false);
-		rdbtnSalmo.setSelected(false);
-		txtMissa.requestFocus();
 	}
 
 	private void letra() {
-		rdbtnInterno.setSelected(false);
-		rdbtnCifra.setSelected(false);
-		rdbtnSalmo.setSelected(false);
-		txtMissa.requestFocus();
 	}
 
 	private void salmo() {
-		rdbtnInterno.setSelected(false);
-		rdbtnCifra.setSelected(false);
-		rdbtnLetra.setSelected(false);
 
 		List<String> salmoLinks;
 		try {
@@ -412,6 +424,43 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		});
 		txtMissa.requestFocus();
 
+	}
+	
+	private void momento() {
+
+		try {
+			MomentoDao momentoDao = MomentoDaoFactory.createMomentoDao();
+			List<String> retorno = new ArrayList<>();
+			Collection<Momento> momentos = momentoDao.listar();
+
+			DefaultCompletionProvider provider = new MomentoContainsProvider();
+
+			for (Momento momento : momentos) {
+				provider.addCompletion(new ShorthandCompletion(provider, momento.getNome(), momento.getNome()));
+			}
+
+			ac = new AutoCompletion(provider);
+			ac.install(txtMissa);
+			ac.addAutoCompletionListener(new AutoCompletionListener() {
+
+				@Override
+				public void autoCompleteUpdate(AutoCompletionEvent e) {
+					if (e.getEventType().equals(Type.POPUP_SHOWN)) {
+						// setCursorInicioLinha();
+					}
+						
+					if (e.getEventType().equals(Type.POPUP_HIDDEN)) {
+						buscarSalmo();
+					}
+				}
+			});
+			txtMissa.requestFocus();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void setCursorInicioLinha() {

@@ -27,6 +27,9 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.Segment;
 
 import org.apache.poi.hslf.model.Slide;
 import org.apache.poi.hslf.model.TextBox;
@@ -42,7 +45,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import model.Momento;
 import model.Musica;
+import model.dao.MomentoDao;
+import model.dao.factory.MomentoDaoFactory;
 
 public class Processador {
 
@@ -514,5 +520,39 @@ public class Processador {
 			return new String(Files.readAllBytes(path));
 		}
 		return "";
+	}
+
+	public static String obterConteudoLinhaProvider(JTextComponent comp, String EMPTY_STRING, Segment seg) {
+		javax.swing.text.Document doc = comp.getDocument();
+
+		int dot = comp.getCaretPosition();
+		javax.swing.text.Element root = doc.getDefaultRootElement();
+		int index = root.getElementIndex(dot);
+		javax.swing.text.Element elem = root.getElement(index);
+		int start = elem.getStartOffset();
+
+		int end = elem.getEndOffset()-1;
+		if(dot < end) {
+			dot = end;
+			comp.setCaretPosition(dot);
+		}
+		
+		int len = dot-start;
+		
+		try {
+			doc.getText(start, len, seg);
+		} catch (BadLocationException ble) {
+			ble.printStackTrace();
+			return EMPTY_STRING;
+		}
+		return seg.toString();
+	}
+	
+	
+	public static int ordinalIndexOf(String str, String substr, int n) {
+	    int pos = str.indexOf(substr);
+	    while (--n > 0 && pos != -1)
+	        pos = str.indexOf(substr, pos + 1);
+	    return pos;
 	}
 }

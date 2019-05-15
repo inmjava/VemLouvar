@@ -16,6 +16,8 @@ import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 
+import br.com.ivan.missagenerator.business.Processador;
+
 public class IvanContainsProvider extends DefaultCompletionProvider{
 
 	@Override
@@ -48,41 +50,9 @@ public class IvanContainsProvider extends DefaultCompletionProvider{
 	
 	@Override
 	public String getAlreadyEnteredText(JTextComponent comp) {
-		Document doc = comp.getDocument();
-
-		int dot = comp.getCaretPosition();
-		Element root = doc.getDefaultRootElement();
-		int index = root.getElementIndex(dot);
-		Element elem = root.getElement(index);
-		int start = elem.getStartOffset();
-
-		int end = elem.getEndOffset();
-		if(dot < end -1) {
-			dot = end -1;
-			comp.setCaretPosition(dot);
-		}
-		
-		int len = dot-start;
-		
-		try {
-			doc.getText(start, len, seg);
-		} catch (BadLocationException ble) {
-			ble.printStackTrace();
-			return EMPTY_STRING;
-		}
-		System.out.println(seg.toString());
-		return seg.toString();
+		return Processador.obterConteudoLinhaProvider(comp, EMPTY_STRING, seg);
 	}
 	
-//	public static void main(String[] args) {
-//		
-//		String str1 = "proclamam ceu TERRA";
-//		String str2 = "Hosana nos terra altos c�us aten��o proclamam";
-//		
-//		
-//		marcarPosicoes(str1, str2);
-//	}
-
 
 	public static String marcarPosicoes(String str1, String str2) {
 		String str2Upp = StringUtils.stripAccents(str2.toUpperCase());
