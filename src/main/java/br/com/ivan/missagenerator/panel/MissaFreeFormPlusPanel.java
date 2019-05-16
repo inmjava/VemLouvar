@@ -16,7 +16,6 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -42,6 +41,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import br.com.ivan.missagenerator.business.Processador;
 import br.com.ivan.missagenerator.business.provider.IvanContainsProvider;
 import br.com.ivan.missagenerator.business.provider.MomentoContainsProvider;
+import br.com.ivan.missagenerator.business.provider.ReplaceLineAutoCompletion;
 import br.com.ivan.missagenerator.business.provider.SalmoContainsProvider;
 import br.com.ivan.missagenerator.frame.MenuPrincipal;
 import br.com.ivan.missagenerator.frame.Painel;
@@ -259,22 +259,18 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		for (Momento m : momentos) {
 			List<Musica> musicas = momentoDao.listarMusicas(m);
 			for (Musica musica : musicas) {
-				String textoMusica = madeMusicLine(m.getId(), musica.getId(), m.getNome(), musica.getNome(), musica.getLink());
+				String textoMusica = madeMusicLine(m.getId().toString(), musica.getId().toString(), m.getNome(), musica.getNome(), musica.getLink());
 				provider.addCompletion(new ShorthandCompletion(provider,
 						m.getNome() + " - " + musica.getNome() + " - " + musica.getApresentacao(), textoMusica));
 			}
 		}
-		ac = new AutoCompletion(provider);
+		ac = new ReplaceLineAutoCompletion(provider);
 		ac.install(txtMissa);
 
 	}
 
-	private String madeMusicLine(Long idMomento, Long idMusica, String nomeMomento, String nomeMusica, String linkMusica) {
-		return StringUtils.rightPad(idMomento + ":", 5)
-				+ StringUtils.rightPad(idMusica + ":", 5) + " "
-				+ StringUtils.rightPad(nomeMomento + ":", 20) + " "
-				+ StringUtils.rightPad(nomeMusica + ": ", 50)
-				+ StringUtils.rightPad(linkMusica, 0);
+	private String madeMusicLine(String idMomento, String idMusica, String nomeMomento, String nomeMusica, String linkMusica) {
+		return Processador.madeMusicLine(idMomento, idMusica, nomeMomento, nomeMusica, linkMusica);
 	}
 
 	private void carregarMissaSalva() {
@@ -407,7 +403,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 			provider.addCompletion(new ShorthandCompletion(provider, linkSalmo, linkSalmo));
 		}
 
-		ac = new AutoCompletion(provider);
+		ac = new ReplaceLineAutoCompletion(provider);
 		ac.install(txtMissa);
 		ac.addAutoCompletionListener(new AutoCompletionListener() {
 
@@ -436,10 +432,10 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 			DefaultCompletionProvider provider = new MomentoContainsProvider();
 
 			for (Momento momento : momentos) {
-				provider.addCompletion(new ShorthandCompletion(provider, momento.getNome(), momento.getNome()));
+				provider.addCompletion(new ShorthandCompletion(provider, momento.getId() + ":" + momento.getNome(), momento.getId() + ":" + momento.getNome()));
 			}
 
-			ac = new AutoCompletion(provider);
+			ac = new ReplaceLineAutoCompletion(provider);
 			ac.install(txtMissa);
 			ac.addAutoCompletionListener(new AutoCompletionListener() {
 
@@ -450,7 +446,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 					}
 						
 					if (e.getEventType().equals(Type.POPUP_HIDDEN)) {
-						buscarSalmo();
+						// do nothing
 					}
 				}
 			});
@@ -503,7 +499,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 
 			String texto = txtMissa.getText();
 			txtMissa.setText(texto.substring(0, cursorInicioLinha) + // linhas anteriores
-							 madeMusicLine(idMomento, idMusica, nomeMomento, nomeMusica, linkMusica) + //"\n" + // nova linha
+							 madeMusicLine(idMomento.toString(), idMusica.toString(), nomeMomento, nomeMusica, linkMusica) + //"\n" + // nova linha
 							 texto.substring(cursorFimLinha));
 			txtMissa.setCaretPosition(cursorInicioLinha);
 			txtMissa.requestFocus();

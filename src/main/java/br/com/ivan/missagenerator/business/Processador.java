@@ -31,6 +31,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.Segment;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hslf.model.Slide;
 import org.apache.poi.hslf.model.TextBox;
 import org.apache.poi.hslf.usermodel.RichTextRun;
@@ -554,5 +555,25 @@ public class Processador {
 	    while (--n > 0 && pos != -1)
 	        pos = str.indexOf(substr, pos + 1);
 	    return pos;
+	}
+	
+	public static String madeMusicLine(String idMomento) {
+		return StringUtils.rightPad(idMomento + ":", 5);
+	}
+	
+	public static String madeMusicLine(String idMomento, String idMusica) {
+		return madeMusicLine(idMomento) + StringUtils.rightPad(idMusica + ":", 5) + " ";
+	}
+	
+	public static String madeMusicLine(String idMomento, String idMusica, String nomeMomento) {
+		return madeMusicLine(idMomento, idMusica) + StringUtils.rightPad(nomeMomento + ":", 20) + " ";
+	}
+	
+	public static String madeMusicLine(String idMomento, String idMusica, String nomeMomento, String nomeMusica) {
+		return madeMusicLine(idMomento, idMusica, nomeMomento) + StringUtils.rightPad(nomeMusica + ":", 50) + " ";
+	}
+
+	public static String madeMusicLine(String idMomento, String idMusica, String nomeMomento, String nomeMusica, String linkMusica) {
+		return madeMusicLine(idMomento, idMusica, nomeMomento, nomeMusica) + StringUtils.rightPad(linkMusica, 0);
 	}
 }
