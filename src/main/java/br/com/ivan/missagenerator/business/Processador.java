@@ -523,57 +523,5 @@ public class Processador {
 		return "";
 	}
 
-	public static String obterConteudoLinhaProvider(JTextComponent comp, String EMPTY_STRING, Segment seg) {
-		javax.swing.text.Document doc = comp.getDocument();
-
-		int dot = comp.getCaretPosition();
-		javax.swing.text.Element root = doc.getDefaultRootElement();
-		int index = root.getElementIndex(dot);
-		javax.swing.text.Element elem = root.getElement(index);
-		int start = elem.getStartOffset();
-
-		int end = elem.getEndOffset()-1;
-		if(dot < end) {
-			dot = end;
-			comp.setCaretPosition(dot);
-		}
-		
-		int len = dot-start;
-		
-		try {
-			doc.getText(start, len, seg);
-		} catch (BadLocationException ble) {
-			ble.printStackTrace();
-			return EMPTY_STRING;
-		}
-		return seg.toString();
-	}
 	
-	
-	public static int ordinalIndexOf(String str, String substr, int n) {
-	    int pos = str.indexOf(substr);
-	    while (--n > 0 && pos != -1)
-	        pos = str.indexOf(substr, pos + 1);
-	    return pos;
-	}
-	
-	public static String madeMusicLine(String idMomento) {
-		return StringUtils.rightPad(idMomento + ":", 5);
-	}
-	
-	public static String madeMusicLine(String idMomento, String idMusica) {
-		return madeMusicLine(idMomento) + StringUtils.rightPad(idMusica + ":", 5) + " ";
-	}
-	
-	public static String madeMusicLine(String idMomento, String idMusica, String nomeMomento) {
-		return madeMusicLine(idMomento, idMusica) + StringUtils.rightPad(nomeMomento + ":", 20) + " ";
-	}
-	
-	public static String madeMusicLine(String idMomento, String idMusica, String nomeMomento, String nomeMusica) {
-		return madeMusicLine(idMomento, idMusica, nomeMomento) + StringUtils.rightPad(nomeMusica + ":", 50) + " ";
-	}
-
-	public static String madeMusicLine(String idMomento, String idMusica, String nomeMomento, String nomeMusica, String linkMusica) {
-		return madeMusicLine(idMomento, idMusica, nomeMomento, nomeMusica) + StringUtils.rightPad(linkMusica, 0);
-	}
 }

@@ -1,4 +1,4 @@
-package br.com.ivan.missagenerator.business.provider;
+package br.com.ivan.missagenerator.business.autocomplete.provider;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
@@ -6,17 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
-
-import br.com.ivan.missagenerator.business.Processador;
 
 public class IvanContainsProvider extends DefaultCompletionProvider{
 
@@ -50,7 +45,7 @@ public class IvanContainsProvider extends DefaultCompletionProvider{
 	
 	@Override
 	public String getAlreadyEnteredText(JTextComponent comp) {
-		return Processador.obterConteudoLinhaProvider(comp, EMPTY_STRING, seg);
+		return ProcessadorAutocomplete.obterConteudoLinhaProvider(comp);
 	}
 	
 

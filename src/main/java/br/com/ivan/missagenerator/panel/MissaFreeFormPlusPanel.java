@@ -39,10 +39,12 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import br.com.ivan.missagenerator.business.Processador;
-import br.com.ivan.missagenerator.business.provider.IvanContainsProvider;
-import br.com.ivan.missagenerator.business.provider.MomentoContainsProvider;
-import br.com.ivan.missagenerator.business.provider.ReplaceLineAutoCompletion;
-import br.com.ivan.missagenerator.business.provider.SalmoContainsProvider;
+import br.com.ivan.missagenerator.business.autocomplete.autocompletion.ReplaceLineAutoCompletion;
+import br.com.ivan.missagenerator.business.autocomplete.autocompletion.SalmoLineAutoCompletion;
+import br.com.ivan.missagenerator.business.autocomplete.provider.IvanContainsProvider;
+import br.com.ivan.missagenerator.business.autocomplete.provider.MomentoContainsProvider;
+import br.com.ivan.missagenerator.business.autocomplete.provider.ProcessadorAutocomplete;
+import br.com.ivan.missagenerator.business.autocomplete.provider.SalmoContainsProvider;
 import br.com.ivan.missagenerator.frame.MenuPrincipal;
 import br.com.ivan.missagenerator.frame.Painel;
 import model.Momento;
@@ -270,7 +272,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	}
 
 	private String madeMusicLine(String idMomento, String idMusica, String nomeMomento, String nomeMusica, String linkMusica) {
-		return Processador.madeMusicLine(idMomento, idMusica, nomeMomento, nomeMusica, linkMusica);
+		return ProcessadorAutocomplete.madeMusicLine(idMomento, idMusica, nomeMomento, nomeMusica, linkMusica);
 	}
 
 	private void carregarMissaSalva() {
@@ -403,7 +405,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 			provider.addCompletion(new ShorthandCompletion(provider, linkSalmo, linkSalmo));
 		}
 
-		ac = new ReplaceLineAutoCompletion(provider);
+		ac = new SalmoLineAutoCompletion(provider);
 		ac.install(txtMissa);
 		ac.addAutoCompletionListener(new AutoCompletionListener() {
 
@@ -473,21 +475,6 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	}
 
 	private void buscarSalmo() {
-		try {
-			String url = getConteudoLinhaSelecionada();
-			String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(url);
-			txtApresentacao.setText(url);
-			String cifra = cifra0eApresentacao1Nome2[0];
-			String apresentacao = cifra0eApresentacao1Nome2[1];
-			String nome = cifra0eApresentacao1Nome2[2];
-			txtCifra.setText(cifra);
-			txtApresentacao.setText(apresentacao);
-			adicionarLinha(-1L, -1L, "naoselecionado", nome, url);
-		} catch (IOException e) {
-			// ignore error
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
 	}
 
 	private void adicionarLinha(Long idMomento, Long idMusica, String nomeMomento, String nomeMusica, String linkMusica) {
@@ -509,21 +496,6 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 							+ e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
 		}		
-	}
-
-	private String getConteudoLinhaSelecionada() {
-		try {
-			int posicaoCursor = txtMissa.getCaretPosition();
-			int numLinha = txtMissa.getLineOfOffset(posicaoCursor);
-			int cursorInicioLinha = txtMissa.getLineStartOffset(numLinha);
-			int cursorFimLinha = txtMissa.getLineEndOffset(numLinha);
-
-			return txtMissa.getText().substring(cursorInicioLinha, cursorFimLinha);
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
 	}
 
 }

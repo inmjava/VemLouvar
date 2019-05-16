@@ -1,4 +1,4 @@
-package br.com.ivan.missagenerator.business.provider;
+package br.com.ivan.missagenerator.business.autocomplete.provider;
 
 import java.util.List;
 
@@ -18,6 +18,6 @@ public class SalmoContainsProvider extends DefaultCompletionProvider {
 	
 	@Override
 	public String getAlreadyEnteredText(JTextComponent comp) {
-		return Processador.obterConteudoLinhaProvider(comp, EMPTY_STRING, seg);
+		return ProcessadorAutocomplete.obterConteudoLinhaProvider(comp);
 	}
 }

@@ -1,4 +1,4 @@
-package br.com.ivan.missagenerator.business.provider;
+package br.com.ivan.missagenerator.business.autocomplete.provider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class MomentoContainsProvider extends DefaultCompletionProvider {
 					continue;
 				}
 				
-				String newMusicLine = Processador.madeMusicLine(id, idMusica, nome);
+				String newMusicLine = ProcessadorAutocomplete.madeMusicLine(id, idMusica, nome);
 				newMusicLine = newMusicLine.substring(0, newMusicLine.lastIndexOf(":"));
 				retVal.add(new ShorthandCompletion(c.getProvider(), momentoOptions, newMusicLine));
 				index++;
@@ -79,7 +79,7 @@ public class MomentoContainsProvider extends DefaultCompletionProvider {
 		}
 		String texto = seg.toString();
 		
-		int ordinalIndexOf = Processador.ordinalIndexOf(texto, ":", 3);
+		int ordinalIndexOf = ProcessadorAutocomplete.ordinalIndexOf(texto, ":", 3);
 		
 		dot = start + ordinalIndexOf;
 		comp.setCaretPosition(dot);

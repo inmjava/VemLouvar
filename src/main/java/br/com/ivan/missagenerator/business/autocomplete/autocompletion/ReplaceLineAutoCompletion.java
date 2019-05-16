@@ -1,10 +1,9 @@
-package br.com.ivan.missagenerator.business.provider;
+package br.com.ivan.missagenerator.business.autocomplete.autocompletion;
 
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.Document;
-import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 
 import org.fife.ui.autocomplete.AutoCompletion;
@@ -16,11 +15,9 @@ public class ReplaceLineAutoCompletion extends AutoCompletion{
 
 	public ReplaceLineAutoCompletion(CompletionProvider provider) {
 		super(provider);
-		// TODO Auto-generated constructor stub
 	}
 
-	protected void insertCompletion(Completion c,
-			boolean typedParamListStartChar) {
+	protected void insertCompletion(Completion c, boolean typedParamListStartChar) {
 
 		JTextComponent textComp = getTextComponent();
 		String alreadyEntered = c.getAlreadyEntered(textComp);
@@ -31,17 +28,9 @@ public class ReplaceLineAutoCompletion extends AutoCompletion{
 		int len = alreadyEntered.length();
 		int start = dot - len;
 		Document doc = textComp.getDocument();
-		String replacement = getReplacementText(c, doc,
-				start, len);
-		replacement = "abrobra!";
+		String replacement = getReplacementText(c, doc, start, len);
 		
-//		Element root = doc.getDefaultRootElement();
-//		int index = root.getElementIndex(dot);
-//		Element elem = root.getElement(index);
-//		
-//		start = elem.getStartOffset();
-//		int end = elem.getEndOffset();
-		
+		replacement = tratarReplacement(replacement);
 		
 		try {
 			RSyntaxTextArea txtArea = (RSyntaxTextArea) textComp;
@@ -50,14 +39,27 @@ public class ReplaceLineAutoCompletion extends AutoCompletion{
 			int cursorInicioLinha = txtArea.getLineStartOffset(numLinha);
 			int cursorFimLinha = txtArea.getLineEndOffset(numLinha);
 			
-			
+
 			caret.setDot(cursorInicioLinha);
-			caret.moveDot(cursorFimLinha);
+			// resolvendo caso nao exista nada no txtArea
+			if(cursorFimLinha > 0) {
+				// na ultima linha ele pega a posicao correta, nas demais pega a posicao +1 = \n
+				if(cursorFimLinha != txtArea.getText().length()) {
+					cursorFimLinha--;
+				}
+				caret.moveDot(cursorFimLinha);
+			}
+			
 			textComp.replaceSelection(replacement);
+			caret.setDot(posicaoCursor);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	
+	
+	public String tratarReplacement(String replacement) {
+		return replacement;
 	}
 }

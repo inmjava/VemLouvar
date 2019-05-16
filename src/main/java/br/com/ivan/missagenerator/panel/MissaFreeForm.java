@@ -38,7 +38,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import br.com.ivan.missagenerator.business.Processador;
-import br.com.ivan.missagenerator.business.provider.IvanContainsProvider;
+import br.com.ivan.missagenerator.business.autocomplete.provider.IvanContainsProvider;
 import br.com.ivan.missagenerator.frame.MenuPrincipal;
 import br.com.ivan.missagenerator.frame.Painel;
 import model.Momento;
