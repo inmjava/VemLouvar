@@ -41,6 +41,7 @@ public class LetraLineAutoCompletion extends AutoCompletion{
 		String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(replacement);
 		
 		txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
+		txtApresentacao.setCaretPosition(0);
 		
 	}
 	

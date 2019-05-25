@@ -80,6 +80,9 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	private JRadioButton rdbtnMomento;
 	private HashMap<String, String[]> cacheUrl;
 	private String urlSelecionada;
+	private JButton btnAutoorganizar;
+	private JButton btnRefrao;
+	private JButton btnRefrao_1;
 
 	/**
 	 * Create the panel.
@@ -213,6 +216,30 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 				gerarPPT();
 			}
 		});
+		
+		btnAutoorganizar = new JButton("Auto Organizar");
+		btnAutoorganizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				autoOrganizar();
+			}
+		});
+		panel.add(btnAutoorganizar);
+		
+		btnRefrao = new JButton("Refrao +");
+		btnRefrao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fazerRefrao(txtApresentacao, true);
+			}
+		});
+		panel.add(btnRefrao);
+		
+		btnRefrao_1 = new JButton("Refrao -");
+		btnRefrao_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fazerRefrao(txtApresentacao, false);
+			}
+		});
+		panel.add(btnRefrao_1);
 		panel.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Gerar DOCX");
@@ -616,6 +643,142 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 							+ e.getLocalizedMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+
+
+	private String algoritimoAutoOrganizar(String musica) {
+		int maxlinesize = 100;
+		String linhaFinal = "";
+		String linhaTemporaria = "";
+
+		musica = musica.replaceAll("\r", "");
+
+		String[] blocos = musica.split("\n\n");
+		for (String bloco : blocos) {
+			boolean finalizouUmaLinha = false;
+			String[] linhas = bloco.split("\n");
+			for (String linha : linhas) {
+
+				if ((linhaTemporaria + linha).length() < maxlinesize) {
+					linhaTemporaria = removerPontuacaoDepois(linhaTemporaria)
+							+ (linhaTemporaria.equals("") ? "" : " / ")
+							+ Processador.primeiraMaiuscula(removerPontuacaoAntes(linha));
+				} else {
+					finalizouUmaLinha = true;
+					linhaFinal += "\n" + linhaTemporaria;
+					linhaTemporaria = linha;
+				}
+			}
+
+			if (finalizouUmaLinha && linhaTemporaria.length() < (maxlinesize / 2)) {
+				linhaFinal = removerPontuacaoDepois(linhaFinal) + (linhaFinal.equals("") ? "" : " / ")
+						+ Processador.primeiraMaiuscula(removerPontuacaoAntes(linhaTemporaria));
+			} else {
+				linhaFinal += "\n" + linhaTemporaria;
+
+			}
+			linhaTemporaria = "";
+			linhaFinal += "\n";
+		}
+
+		return linhaFinal.trim();
+
+	}
+
+	private String removerPontuacaoDepois(String textoDepoisLinha) {
+		if (textoDepoisLinha.equals("")) {
+			return "";
+		}
+		char firstChar = textoDepoisLinha.charAt(0);
+		while (!Character.isLetter(firstChar)) {
+			textoDepoisLinha = textoDepoisLinha.substring(1);
+			firstChar = textoDepoisLinha.charAt(0);
+		}
+		return textoDepoisLinha;
+
+	}
+
+	private String removerPontuacaoAntes(String textoAntesLinha) {
+		if (textoAntesLinha.equals("")) {
+			return textoAntesLinha;
+		}
+		char lastChar = textoAntesLinha.charAt(textoAntesLinha.length() - 1);
+		while (!Character.isLetter(lastChar)) {
+			textoAntesLinha = textoAntesLinha.substring(0, textoAntesLinha.length() - 1);
+			lastChar = textoAntesLinha.charAt(textoAntesLinha.length() - 1);
+		}
+		return textoAntesLinha;
+	}
+
+	private void autoOrganizar() {
+		txtApresentacao.setText(algoritimoAutoOrganizar(txtApresentacao.getText()));
+	}
+	
+	private void fazerRefrao(JTextArea jtx, boolean adicionarRefrao) {
+		try {
+			int posicaoCursor = jtx.getCaretPosition();
+			int numLinha = jtx.getLineOfOffset(posicaoCursor);
+			int cursorInicioLinha = jtx.getLineStartOffset(numLinha);
+			int cursorFimLinha = jtx.getLineEndOffset(numLinha);
+			int lengthLinha = cursorFimLinha - cursorInicioLinha;
+
+			String texto = jtx.getText();
+			// ultima linha
+
+			int posicaoInicioSelecao = jtx.getSelectionStart();
+			int posicaoFimSelecao = jtx.getSelectionEnd();
+			int linhaInicio = jtx.getLineOfOffset(posicaoInicioSelecao);
+			int linhaFim = jtx.getLineOfOffset(posicaoFimSelecao);
+
+			for (int i = linhaInicio; i <= linhaFim; i++) {
+				if (adicionarRefrao) {
+					texto = adicionarRefrao(texto, jtx.getLineStartOffset(i));
+				} else {
+					texto = removerRefrao(texto, jtx.getLineStartOffset(i));
+				}
+				jtx.setText(texto);
+			}
+			if (adicionarRefrao) {
+				texto = adicionarQuebra(texto, jtx.getLineStartOffset(linhaInicio), jtx.getLineEndOffset(linhaFim),
+						adicionarRefrao);
+				jtx.setText(texto);
+			}
+
+			jtx.setCaretPosition(jtx.getLineStartOffset(linhaInicio));
+			jtx.requestFocus();
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private String adicionarRefrao(String texto, int posicaoStart) {
+		if (texto.charAt(posicaoStart) == '$') {
+			return texto;
+		} else {
+			return texto.substring(0, posicaoStart) + "$"
+					+ Processador.primeiraMaiuscula(texto.substring(posicaoStart));
+		}
+	}
+
+	private String removerRefrao(String texto, int posicaoStart) {
+		if (texto.charAt(posicaoStart) == '$') {
+			return texto.substring(0, posicaoStart) + texto.substring(posicaoStart + 1);
+		} else {
+			return texto;
+		}
+	}
+
+	private String adicionarQuebra(String texto, int offsetInicio, int offsetFim, boolean adicionarRefrao) {
+		String quebra = adicionarRefrao ? "\n\n" : "\n";
+		String texto1 = texto.substring(0, offsetInicio).trim();
+		String texto2 = texto.substring(offsetInicio, offsetFim).trim();
+		texto2 = texto2.replaceAll("\n\n", "\n");
+		String texto3 = texto.substring(offsetFim).trim();
+		if (offsetInicio != 0) {
+			texto1 += quebra;
+		}
+		return texto1 + texto2 + quebra + texto3;
 	}
 
 }
