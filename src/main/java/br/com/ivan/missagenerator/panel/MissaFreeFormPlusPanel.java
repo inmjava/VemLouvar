@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,11 +26,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.AutoCompletionEvent;
 import org.fife.ui.autocomplete.AutoCompletionEvent.Type;
@@ -72,6 +73,8 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	private String strLetra = "Letra";
 	private String strMomento = "Momento";
 	private JRadioButton rdbtnMomento;
+	private HashMap<String, String[]> cacheUrl;
+	private String urlSelecionada;
 
 	/**
 	 * Create the panel.
@@ -165,9 +168,19 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		add(splitPane, gbc_splitPane);
 
 		txtCifra = new RSyntaxTextArea(20, 60);
+		txtCifra.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent arg0) {
+				atualizarCacheCaretUpdate();
+			}
+		});
 		splitPane.setRightComponent(new JScrollPane(txtCifra));
 
 		txtApresentacao = new RSyntaxTextArea(20, 60);
+		txtApresentacao.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent arg0) {
+				atualizarCacheCaretUpdate();
+			}
+		});
 		splitPane.setLeftComponent(new JScrollPane(txtApresentacao));
 
 		txtMissa = new RSyntaxTextArea(20, 60);
@@ -218,6 +231,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 
 	@Override
 	public void refreshValues() throws Exception {
+		cacheUrl = new HashMap<>();
 		carregarMissaSalva();
 		carregarMusicas();
 		makeInput();
@@ -329,29 +343,78 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		return missa;
 	}
 
+	private void adicionaBarraNAdicional() {
+		if(!txtMissa.getText().endsWith("\n\n")) {
+		    Runnable doHighlight = new Runnable() {
+		        @Override
+		        public void run() {
+					int caretPosition = txtMissa.getCaretPosition();
+					txtMissa.setCaretPosition(txtMissa.getText().length());
+		        	txtMissa.replaceSelection("\n\n");
+					txtMissa.setCaretPosition(caretPosition);
+		        }
+		    };       
+		    SwingUtilities.invokeLater(doHighlight);
+		}
+	}
+	
 	private void selecionarMusicaCaretUpdate() {
+		adicionaBarraNAdicional();
 		try {
+			urlSelecionada = null;
 			salvarMissa(true);
-			int posicaoCursor = txtMissa.getCaretPosition();
-			int numLinha = txtMissa.getLineOfOffset(posicaoCursor);
-			int cursorInicioLinha = txtMissa.getLineStartOffset(numLinha);
-			int cursorFimLinha = txtMissa.getLineEndOffset(numLinha);
-			if (linhaSelecionada != numLinha) {
-				linhaSelecionada = numLinha;
-				String linha = txtMissa.getText().substring(cursorInicioLinha, cursorFimLinha);
-				String[] elementos = linha.split(":");
-				if (StringUtils.isNumeric(elementos[0]) && StringUtils.isNumeric(elementos[1].trim())) {
-					MusicaDao musicaDao = MusicaDaoFactory.createMusicaDao();
-					Musica musica = musicaDao.listar(Long.parseLong(elementos[1].trim()));
-					selecionarMusica(musica);
-				}
+			MusicaDao musicaDao = MusicaDaoFactory.createMusicaDao();
+			String linha = ProcessadorAutocomplete.getConteudoLinhaSelecionada(txtMissa);
+			long idMusica = Long.parseLong(ProcessadorAutocomplete.getLinhaIdMusica(linha));
+			if(idMusica > 0) {
+				Musica musica = musicaDao.listar(idMusica);
+				selecionarMusica(musica);
+			} else {
+				urlSelecionada = ProcessadorAutocomplete.getLinhaLinkMusica(linha);
+				selecionarLink();
 			}
-		} catch (BadLocationException e) {
-			System.out.println("Problema com a posicao da linha");
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("ArrayIndexOutOfBoundsException (Normal do split)");
+			System.out.println("OK música não mapeada nessa linha");
 		} catch (Exception e) {
-			System.out.println("Verificar: " + e.getMessage());
+//			throw new RuntimeException(e);
+			e.printStackTrace();
+			System.out.println("Erro update caret, msg: " + e.getLocalizedMessage());
+			System.out.println("Erro update caret, msg: " + e.getMessage());
+			System.out.println(e);
+		}
+	}
+
+	private void selecionarMusica(Musica musica) {
+		String apresentacao = musica.getApresentacao();
+		txtApresentacao.setText(apresentacao);
+		txtApresentacao.setCaretPosition(0);
+		txtCifra.setText(musica.getCifra());
+		txtCifra.setCaretPosition(0);
+		txtMissa.requestFocus();
+	}
+	
+	private void selecionarLink() {
+		try {
+			String[] cifra0eApresentacao1Nome2 = cacheUrl.get(urlSelecionada);
+			if(cifra0eApresentacao1Nome2 == null) {
+				cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(urlSelecionada);
+				cacheUrl.put(urlSelecionada, cifra0eApresentacao1Nome2);
+			}
+			txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
+			txtApresentacao.setCaretPosition(0);
+			txtCifra.setText(cifra0eApresentacao1Nome2[0]);
+			txtCifra.setCaretPosition(0);
+			txtMissa.requestFocus();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private void atualizarCacheCaretUpdate() {
+		if(urlSelecionada != null) {
+			cacheUrl.put(urlSelecionada, new String[] {txtCifra.getText(), txtApresentacao.getText(), ""});
 		}
 	}
 
@@ -370,17 +433,14 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		}
 	}
 
-	private void selecionarMusica(Musica musica) {
-		String apresentacao = musica.getApresentacao();
-		txtApresentacao.setText(apresentacao);
-		txtApresentacao.setCaretPosition(0);
-		txtCifra.setText(musica.getCifra());
-		txtCifra.setCaretPosition(0);
-		txtMissa.requestFocus();
-	}
-
 	private void interno() {
-		txtMissa.requestFocus();
+		try {
+			carregarMusicas();
+			txtMissa.requestFocus();
+		} catch (Exception e) {
+			e.printStackTrace();
+			new RuntimeException(e);
+		}
 	}
 
 	private void cifra() {
@@ -416,7 +476,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 				}
 					
 				if (e.getEventType().equals(Type.POPUP_HIDDEN)) {
-					buscarSalmo();
+					//buscarSalmo();
 				}
 			}
 		});

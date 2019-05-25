@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -55,7 +57,7 @@ public class Processador {
 
 	private static JSONArray jsonArray;
 	
-	public static void main(String[] args) throws IOException {
+	public static void main7(String[] args) throws IOException {
 		Processador.getSalmoLinks();
 	}
 	
@@ -180,6 +182,34 @@ public class Processador {
 		return returnArr;
 	}
 	
+	public static void main(String[] args) throws IOException {
+		String url = "https://liturgia.cancaonova.com/pb/liturgia/5a-semana-da-pascoa-sexta-feira-2/?sDia=24&sMes=05&sAno=2019";
+		
+		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
+		String musicaTexto = "";
+		String musicaApresentacao = "";
+		String musicaCifra = "";
+		String nome = "";
+		for (Iterator<Element> iterator2 = jsoupDoc.select(".tab-pane#liturgia-2 p").iterator(); iterator2
+				.hasNext();) {
+			Element type = (Element) iterator2.next();
+			musicaCifra += type.text() + "\n";
+		}
+		musicaApresentacao = jsoupDoc.select(".tab-pane#liturgia-2 p").get(1).text();
+		nome = jsoupDoc.select(".tab-pane#liturgia-2 p").get(0).text();
+		nome = captureValuesFromParentheses(nome) + " " + musicaApresentacao;
+		musicaApresentacao = "$"+musicaApresentacao;
+		System.out.println(new String[] { musicaCifra, musicaApresentacao, nome }[2]);
+		
+		
+	}
+	
+    public static String captureValuesFromParentheses(String text){
+        Matcher match = Pattern.compile("\\((.*)\\)").matcher(text);
+        match.find();
+		return match.group(1);
+    }
+	
 
 	public static String[] getCifra0EApresentacao1Nome2(String url) throws IOException {
 		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
@@ -193,6 +223,10 @@ public class Processador {
 				musicaCifra += type.text() + "\n";
 			}
 			musicaApresentacao = jsoupDoc.select(".tab-pane#liturgia-2 p").get(1).text();
+			nome = jsoupDoc.select(".tab-pane#liturgia-2 p").get(0).text();
+			nome = captureValuesFromParentheses(nome) + " " + musicaApresentacao;
+			musicaApresentacao = "$"+musicaApresentacao;
+			return new String[] { musicaCifra, musicaApresentacao, nome };
 		} else if (url.contains("https://www.letras.mus.br")){
 			String musicaTexto = "";
 			for (Element paragrafo : jsoupDoc.select(".cnt-letra p")) {

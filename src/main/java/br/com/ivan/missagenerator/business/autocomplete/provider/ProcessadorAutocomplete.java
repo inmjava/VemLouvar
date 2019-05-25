@@ -1,5 +1,7 @@
 package br.com.ivan.missagenerator.business.autocomplete.provider;
 
+import java.util.ArrayList;
+
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
@@ -8,6 +10,10 @@ import javax.swing.text.Segment;
 
 import org.apache.commons.lang3.StringUtils;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+
+import model.Momento;
+import model.dao.MomentoDao;
+import model.dao.factory.MomentoDaoFactory;
 
 public class ProcessadorAutocomplete {
 
@@ -24,6 +30,17 @@ public class ProcessadorAutocomplete {
 
 			return txtArea.getText().substring(cursorInicioLinha, cursorFimLinha);
 		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static Momento getMomentoSalmo() {
+		MomentoDao momentoDao = MomentoDaoFactory.createMomentoDao();
+		try {
+			return ((ArrayList<Momento>)momentoDao.listar(new Momento("Salmo"))).get(0);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -60,22 +77,27 @@ public class ProcessadorAutocomplete {
 	}
 
 	public static String getLinhaIdMomento(String linha) {
-		return linha.split(":")[0];
+		return linha.split(":")[0].trim();
 	}
 
 	public static String getLinhaIdMusica(String linha) {
-		return linha.split(":")[1];
+		return linha.split(":")[1].trim();
 	}
 
 	public static String getLinhaNomeMomento(String linha) {
-		return linha.split(":")[2];
+		return linha.split(":")[2].trim();
 	}
 
 	public static String getLinhaNomeMusica(String linha) {
-		return linha.split(":")[3];
+		return linha.split(":")[3].trim();
 	}
 
 	public static String getLinhaLinkMusica(String linha) {
-		return linha.split(":")[4];
+		String[] linhaArr = linha.split(":");
+		String url = linhaArr[4];
+		for (int i = 4 + 1; i < linhaArr.length; i++) {
+			url = url + ":" + linhaArr[i];
+		}
+		return url.trim();
 	}
 }
