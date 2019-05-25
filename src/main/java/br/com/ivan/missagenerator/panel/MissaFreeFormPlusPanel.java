@@ -35,6 +35,7 @@ import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.AutoCompletionEvent;
 import org.fife.ui.autocomplete.AutoCompletionEvent.Type;
 import org.fife.ui.autocomplete.AutoCompletionListener;
+import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -42,6 +43,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import br.com.ivan.missagenerator.business.Processador;
 import br.com.ivan.missagenerator.business.autocomplete.autocompletion.ReplaceLineAutoCompletion;
 import br.com.ivan.missagenerator.business.autocomplete.autocompletion.SalmoLineAutoCompletion;
+import br.com.ivan.missagenerator.business.autocomplete.provider.CifraContainsProvider;
 import br.com.ivan.missagenerator.business.autocomplete.provider.IvanContainsProvider;
 import br.com.ivan.missagenerator.business.autocomplete.provider.MomentoContainsProvider;
 import br.com.ivan.missagenerator.business.autocomplete.provider.ProcessadorAutocomplete;
@@ -359,7 +361,7 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	}
 	
 	private void selecionarMusicaCaretUpdate() {
-		adicionaBarraNAdicional();
+//		adicionaBarraNAdicional();
 		try {
 			urlSelecionada = null;
 			salvarMissa(true);
@@ -444,6 +446,43 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 	}
 
 	private void cifra() {
+		DefaultCompletionProvider provider = new CifraContainsProvider();
+
+		ac = new ReplaceLineAutoCompletion(provider);
+		ac.addAutoCompletionListener(new AutoCompletionListener() {
+
+			@Override
+			public void autoCompleteUpdate(AutoCompletionEvent e) {
+				if (e.getEventType().equals(Type.POPUP_SHOWN)) {
+				}
+					
+				if (e.getEventType().equals(Type.POPUP_HIDDEN)) {
+					carregarCifras(provider);
+				}
+			}
+		});
+				
+		ac.install(txtMissa);
+		txtMissa.requestFocus();
+		
+	}
+	
+
+
+	private void carregarCifras(DefaultCompletionProvider provider) {
+		try {
+			List<Completion> completions = provider.getCompletions(txtMissa);
+			completions.clear();
+			String searchMusic = ProcessadorAutocomplete.getConteudoLinhaSelecionada(txtMissa);
+			ArrayList<String> linksCifras = Processador.pesquisarLinks(searchMusic);
+			for (String link : linksCifras) {
+				completions.add(new ShorthandCompletion(provider, link, link));	
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void letra() {
