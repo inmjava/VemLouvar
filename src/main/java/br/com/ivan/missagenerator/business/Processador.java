@@ -56,12 +56,12 @@ import model.dao.factory.MomentoDaoFactory;
 public class Processador {
 
 	private static JSONArray jsonArray;
-	
+
 	public static void main7(String[] args) throws IOException {
 		Processador.getSalmoLinks();
 	}
-	
-	public static List<String> getSalmoLinks() throws IOException{
+
+	public static List<String> getSalmoLinks() throws IOException {
 		String url = "https://liturgia.cancaonova.com/pb/";
 		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
 
@@ -74,7 +74,7 @@ public class Processador {
 		}
 		return links;
 	}
-	
+
 	public static void main5(String[] args) throws IOException {
 		String url = "https://www.letras.mus.br/cancao-nova/169358/";
 		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
@@ -87,30 +87,30 @@ public class Processador {
 		}
 		System.out.println(musicaTexto);
 	}
-	
+
 	public static void main4(String[] args) throws FileNotFoundException, IOException {
 		String searchMusic = "$eu navegarei";
-		
+
 		System.out.println(searchMusic.startsWith("$"));
-		
+
 		ArrayList<String> returnArr = new ArrayList<String>();
 		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br+" + searchMusic).get();
 		Elements links = jsoupDoc.select("a[href]");
 		for (Element link : links) {
 			String strLink = link.attr("abs:href");
-			if(strLink.startsWith("https://www.letras.mus.br")){
+			if (strLink.startsWith("https://www.letras.mus.br")) {
 				System.out.println(strLink);
 				returnArr.add(strLink);
 			}
 		}
 	}
-	
+
 	public static void main3(String[] args) throws FileNotFoundException, IOException {
 		Document jsoupDoc = Jsoup.connect("http://liturgia.cancaonova.com/").get();
 		Elements links = jsoupDoc.select("a[href]");
 		for (Element link : links) {
 			String strLink = link.attr("abs:href");
-			if(strLink.startsWith("http://liturgia.cancaonova.com/liturgia/")){
+			if (strLink.startsWith("http://liturgia.cancaonova.com/liturgia/")) {
 				System.out.println(strLink);
 			}
 		}
@@ -118,14 +118,17 @@ public class Processador {
 
 	public static void main2(String[] args) throws IOException {
 		String link = "http://cifraclub.com/comunidade-shalom/estar-em-tuas-maos/bla.html";
-		link = ((link.contains(".html") ? link.substring(0,link.lastIndexOf("/")) : link) + "/imprimir.html").replaceAll("//", "/");
+		link = ((link.contains(".html") ? link.substring(0, link.lastIndexOf("/")) : link) + "/imprimir.html")
+				.replaceAll("//", "/");
 		System.out.println(link);
 	}
 
 	public static String getUrlMusica(String nomePesquisa, int index) throws IOException {
 		if (jsonArray == null || index == 0) {
 			nomePesquisa = URLEncoder.encode(nomePesquisa, "UTF-8");
-			Document jsoupDoc = Jsoup.connect("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=site:cifraclub.com+" + nomePesquisa).get();
+			Document jsoupDoc = Jsoup.connect(
+					"http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=site:cifraclub.com+" + nomePesquisa)
+					.get();
 			String text = jsoupDoc.select("body").text();
 			jsonArray = new JSONObject(text).getJSONObject("responseData").getJSONArray("results");
 		}
@@ -140,33 +143,42 @@ public class Processador {
 		}
 		return texto.substring(0, 1).toUpperCase() + texto.substring(1);
 	}
-	
-	
-	public static ArrayList<String> pesquisarLinks(String searchMusic) throws IOException{
-		ArrayList<String> returnArr = new ArrayList<String>();
-		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.cifraclub.com.br+imprimir+" + searchMusic).get();
-		Elements links = jsoupDoc.select("a[href]");
-		for (Element link : links) {
-			String strLink = link.attr("abs:href");
-			if(strLink.startsWith("https://www.cifraclub.com.br")){
-				returnArr.add(strLink);
+
+	public static ArrayList<String> pesquisarLinks(String searchMusic) {
+		try {
+			ArrayList<String> returnArr = new ArrayList<String>();
+			Document jsoupDoc = Jsoup
+					.connect("http://www.bing.com/search?q=site%3Awww.cifraclub.com.br+imprimir+" + searchMusic).get();
+			Elements links = jsoupDoc.select("a[href]");
+			for (Element link : links) {
+				String strLink = link.attr("abs:href");
+				if (strLink.startsWith("https://www.cifraclub.com.br")) {
+					returnArr.add(strLink);
+				}
 			}
+			return returnArr;
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		return returnArr;
 	}
-	
-	
-	public static ArrayList<String> pesquisarLinksLetras(String searchMusic) throws IOException{
-		ArrayList<String> returnArr = new ArrayList<String>();
-		Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br+" + searchMusic).get();
-		Elements links = jsoupDoc.select("a[href]");
-		for (Element link : links) {
-			String strLink = link.attr("abs:href");
-			if(strLink.startsWith("https://www.letras.mus.br")){
-				returnArr.add(strLink);
+
+	public static ArrayList<String> pesquisarLinksLetras(String searchMusic) {
+		try {
+			ArrayList<String> returnArr = new ArrayList<String>();
+			Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br+" + searchMusic)
+					.get();
+			Elements links = jsoupDoc.select("a[href]");
+			for (Element link : links) {
+				String strLink = link.attr("abs:href");
+				if (strLink.startsWith("https://www.letras.mus.br")) {
+					returnArr.add(strLink);
+				}
 			}
+			return returnArr;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		return returnArr;
 	}
 
 	public static ArrayList<String> pesquisarSalmo() throws IOException {
@@ -175,101 +187,104 @@ public class Processador {
 		Elements links = jsoupDoc.select("a[href]");
 		for (Element link : links) {
 			String strLink = link.attr("abs:href");
-			if(strLink.startsWith("http://liturgia.cancaonova.com/liturgia/")){
+			if (strLink.startsWith("http://liturgia.cancaonova.com/liturgia/")) {
 				returnArr.add(strLink);
 			}
 		}
 		return returnArr;
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		String url = "https://liturgia.cancaonova.com/pb/liturgia/5a-semana-da-pascoa-sexta-feira-2/?sDia=24&sMes=05&sAno=2019";
-		
+
 		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
 		String musicaTexto = "";
 		String musicaApresentacao = "";
 		String musicaCifra = "";
 		String nome = "";
-		for (Iterator<Element> iterator2 = jsoupDoc.select(".tab-pane#liturgia-2 p").iterator(); iterator2
-				.hasNext();) {
+		for (Iterator<Element> iterator2 = jsoupDoc.select(".tab-pane#liturgia-2 p").iterator(); iterator2.hasNext();) {
 			Element type = (Element) iterator2.next();
 			musicaCifra += type.text() + "\n";
 		}
 		musicaApresentacao = jsoupDoc.select(".tab-pane#liturgia-2 p").get(1).text();
 		nome = jsoupDoc.select(".tab-pane#liturgia-2 p").get(0).text();
 		nome = captureValuesFromParentheses(nome) + " " + musicaApresentacao;
-		musicaApresentacao = "$"+musicaApresentacao;
+		musicaApresentacao = "$" + musicaApresentacao;
 		System.out.println(new String[] { musicaCifra, musicaApresentacao, nome }[2]);
-		
-		
+
 	}
-	
-    public static String captureValuesFromParentheses(String text){
-        Matcher match = Pattern.compile("\\((.*)\\)").matcher(text);
-        match.find();
+
+	public static String captureValuesFromParentheses(String text) {
+		Matcher match = Pattern.compile("\\((.*)\\)").matcher(text);
+		match.find();
 		return match.group(1);
-    }
-	
+	}
 
-	public static String[] getCifra0EApresentacao1Nome2(String url) throws IOException {
-		Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
-		String musicaApresentacao = "";
-		String musicaCifra = "";
-		String nome = "";
-		if (url.contains("cancaonova")) {
-			for (Iterator<Element> iterator2 = jsoupDoc.select(".tab-pane#liturgia-2 p").iterator(); iterator2
-					.hasNext();) {
-				Element type = (Element) iterator2.next();
-				musicaCifra += type.text() + "\n";
-			}
-			musicaApresentacao = jsoupDoc.select(".tab-pane#liturgia-2 p").get(1).text();
-			nome = jsoupDoc.select(".tab-pane#liturgia-2 p").get(0).text();
-			nome = captureValuesFromParentheses(nome) + " " + musicaApresentacao;
-			musicaApresentacao = "$"+musicaApresentacao;
-			return new String[] { musicaCifra, musicaApresentacao, nome };
-		} else if (url.contains("https://www.letras.mus.br")){
-			String musicaTexto = "";
-			for (Element paragrafo : jsoupDoc.select(".cnt-letra p")) {
-				for (String linha : paragrafo.html().split("<br />")) {
-					musicaTexto += paragrafo.html(linha).text() + "\n";
+	public static String[] getCifra0EApresentacao1Nome2(String url) {
+		try {
+
+			Document jsoupDoc = Jsoup.connect(url).userAgent("Mozilla").get();
+			String musicaApresentacao = "";
+			String musicaCifra = "";
+			String nome = "";
+			if (url.contains("cancaonova")) {
+				for (Iterator<Element> iterator2 = jsoupDoc.select(".tab-pane#liturgia-2 p").iterator(); iterator2
+						.hasNext();) {
+					Element type = (Element) iterator2.next();
+					musicaCifra += type.text() + "\n";
 				}
-				musicaTexto += "\n";
-				musicaApresentacao = musicaTexto;
+				musicaApresentacao = jsoupDoc.select(".tab-pane#liturgia-2 p").get(1).text();
+				nome = jsoupDoc.select(".tab-pane#liturgia-2 p").get(0).text();
+				nome = captureValuesFromParentheses(nome) + " " + musicaApresentacao;
+				musicaApresentacao = "$" + musicaApresentacao;
+				return new String[] { musicaCifra, musicaApresentacao, nome };
+			} else if (url.contains("https://www.letras.mus.br")) {
+				String musicaTexto = "";
+				for (Element paragrafo : jsoupDoc.select(".cnt-letra p")) {
+					for (String linha : paragrafo.html().split("<br />")) {
+						musicaTexto += paragrafo.html(linha).text() + "\n";
+					}
+					musicaTexto += "\n";
+					musicaApresentacao = musicaTexto;
+				}
+				return new String[] { "", musicaApresentacao, "" };
+			} else {
+				musicaApresentacao = jsoupDoc.select("pre").text();
+				musicaCifra = jsoupDoc.select("pre").text();
+				nome = jsoupDoc.select("h1").text().replaceAll("Cifra Club", "");
 			}
-			return new String[] { "", musicaApresentacao, "" };
-		} else {
-			musicaApresentacao = jsoupDoc.select("pre").text();
-			musicaCifra = jsoupDoc.select("pre").text();
-			nome = jsoupDoc.select("h1").text();
-		}
 
-		musicaCifra = musicaCifra.replaceAll("\n(.*)\n(.*)\\|-(.*)(\n|\\z)", "");
-		musicaCifra = musicaCifra.replaceAll("\n(.*)\n(.*)\\|-(.*)(\n|\\z)", "");
-		
-		String[] splitData = musicaApresentacao.split("\n");
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < splitData.length; i++) {
-			String eachSplit = splitData[i];
-			if ((eachSplit.matches("(.*)(\\w{3,}+)(.*)(\\w{3,}+)(.*)") || eachSplit.equals(""))
-					&& !eachSplit.matches("(.*)(\\#)(.*)") && !eachSplit.matches("(.*)(7)(.*)")
-					&& !eachSplit.matches("(.*)(9)(.*)")) {
-				sb.append(eachSplit + "\n");
+			musicaCifra = musicaCifra.replaceAll("\n(.*)\n(.*)\\|-(.*)(\n|\\z)", "");
+			musicaCifra = musicaCifra.replaceAll("\n(.*)\n(.*)\\|-(.*)(\n|\\z)", "");
+
+			String[] splitData = musicaApresentacao.split("\n");
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < splitData.length; i++) {
+				String eachSplit = splitData[i];
+				if ((eachSplit.matches("(.*)(\\w{3,}+)(.*)(\\w{3,}+)(.*)") || eachSplit.equals(""))
+						&& !eachSplit.matches("(.*)(\\#)(.*)") && !eachSplit.matches("(.*)(7)(.*)")
+						&& !eachSplit.matches("(.*)(9)(.*)")) {
+					sb.append(eachSplit + "\n");
+				}
 			}
-		}
-		String arquivoCantosPpt = "\n" + sb.toString() + "\n";
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("(\\s)(\\s)+", "$1");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("(\\.)(\\.)+", "");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("^(\\s)", "");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("aa+", "a");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("ee+", "e");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("ii+", "i");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("oo+", "o");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("uu+", "u");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("jesus", "Jesus");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("senhor", "Senhor");
-		arquivoCantosPpt = arquivoCantosPpt.replaceAll("deus", "Deus");
+			String arquivoCantosPpt = "\n" + sb.toString() + "\n";
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("(\\s)(\\s)+", "$1");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("(\\.)(\\.)+", "");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("^(\\s)", "");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("aa+", "a");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("ee+", "e");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("ii+", "i");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("oo+", "o");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("uu+", "u");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("jesus", "Jesus");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("senhor", "Senhor");
+			arquivoCantosPpt = arquivoCantosPpt.replaceAll("deus", "Deus");
 
-		return new String[] { musicaCifra, arquivoCantosPpt, nome };
+			return new String[] { musicaCifra, arquivoCantosPpt, nome };
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void gerarPreviewApresentacao(Collection missa) throws FileNotFoundException, IOException {
@@ -449,15 +464,15 @@ public class Processador {
 		XWPFParagraph p = doc.createParagraph();
 		p.setStyle("mgcifra");
 		XWPFRun r2 = p.createRun();
-		
+
 		String[] lines = arquivoCantosDocx.split("\n");
 		r2.setText(lines[0], 0); // set first line into XWPFRun
-        for(int i=1;i<lines.length;i++){
-            // add break and insert new text
-        	r2.addBreak();
-        	r2.setText(lines[i]);
-        }
-    	r2.addBreak();
+		for (int i = 1; i < lines.length; i++) {
+			// add break and insert new text
+			r2.addBreak();
+			r2.setText(lines[i]);
+		}
+		r2.addBreak();
 	}
 
 	private static void createTitle(SlideShow ppt, String strSlide) {
@@ -551,11 +566,10 @@ public class Processador {
 	public static String loadMissa() throws IOException {
 		File file = new File("db/missa-freeform.txt");
 		Path path = file.toPath();
-		if(file.exists()) {
+		if (file.exists()) {
 			return new String(Files.readAllBytes(path));
 		}
 		return "";
 	}
 
-	
 }

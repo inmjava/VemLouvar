@@ -36,6 +36,18 @@ public class ProcessadorAutocomplete {
 		}
 	}
 	
+
+
+	public static int getPosicaoInicioDaLinha(RSyntaxTextArea txtArea) {
+		try {
+			return txtArea.getLineStartOffset(txtArea.getLineOfOffset(txtArea.getCaretPosition()));
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static Momento getMomentoSalmo() {
 		MomentoDao momentoDao = MomentoDaoFactory.createMomentoDao();
 		try {
@@ -83,6 +95,14 @@ public class ProcessadorAutocomplete {
 	public static String getLinhaIdMusica(String linha) {
 		return linha.split(":")[1].trim();
 	}
+	
+	public static Long getLinhaIdMusicaLong(String linha) {
+		try {
+			return Long.parseLong(getLinhaIdMusica(linha));	
+		} catch (NumberFormatException e) {
+			return -1L;
+		}
+	}
 
 	public static String getLinhaNomeMomento(String linha) {
 		return linha.split(":")[2].trim();
@@ -99,5 +119,18 @@ public class ProcessadorAutocomplete {
 			url = url + ":" + linhaArr[i];
 		}
 		return url.trim();
+	}
+	
+	public static int getIndexOfNonWhitespaceAfterWhitespace(String string){
+	    char[] characters = string.toCharArray();
+	    boolean lastWhitespace = false;
+	    for(int i = 0; i < string.length(); i++){
+	        if(Character.isWhitespace(characters[i])){
+	            lastWhitespace = true;
+	        } else if(lastWhitespace){
+	            return i;
+	        }
+	    }
+	    return -1;
 	}
 }

@@ -53,8 +53,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	private int index;
 	private String textoPesquisa;
 	private MenuPrincipal menuPrincipal;
-	
-	
+
 	public static void main(String[] args) throws IOException {
 		String teste = "";
 		teste += "Tem muita gente\n";
@@ -88,14 +87,14 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		teste += "Cristo vai dar tudo\n";
 		teste += "Ele vai dar tudo\n";
 		teste += "Tudo novo pra você\n";
-		
+
 		teste = Processador.getCifra0EApresentacao1Nome2("https://www.letras.mus.br/maria-do-rosario/1229878/")[1];
 
 		System.out.println(teste);
 		System.out.println("============================");
-		
+
 		teste = new CadastroMusicasPanel(null).algoritimoAutoOrganizar(teste);
-		
+
 		System.out.println(teste);
 
 	}
@@ -104,37 +103,39 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		int maxlinesize = 100;
 		String linhaFinal = "";
 		String linhaTemporaria = "";
-		
+
 		musica = musica.replaceAll("\r", "");
-		
+
 		String[] blocos = musica.split("\n\n");
 		for (String bloco : blocos) {
 			boolean finalizouUmaLinha = false;
 			String[] linhas = bloco.split("\n");
 			for (String linha : linhas) {
-				
-				if((linhaTemporaria+linha).length() < maxlinesize) {
-					linhaTemporaria = removerPontuacaoDepois(linhaTemporaria) + (linhaTemporaria.equals("") ? "" : " / ") + Processador.primeiraMaiuscula(removerPontuacaoAntes(linha));
+
+				if ((linhaTemporaria + linha).length() < maxlinesize) {
+					linhaTemporaria = removerPontuacaoDepois(linhaTemporaria)
+							+ (linhaTemporaria.equals("") ? "" : " / ")
+							+ Processador.primeiraMaiuscula(removerPontuacaoAntes(linha));
 				} else {
 					finalizouUmaLinha = true;
 					linhaFinal += "\n" + linhaTemporaria;
 					linhaTemporaria = linha;
 				}
 			}
-			
-			if(finalizouUmaLinha && linhaTemporaria.length() < (maxlinesize/2)) {
-				linhaFinal = removerPontuacaoDepois(linhaFinal) + (linhaFinal.equals("") ? "" : " / ") + Processador.primeiraMaiuscula(removerPontuacaoAntes(linhaTemporaria));
+
+			if (finalizouUmaLinha && linhaTemporaria.length() < (maxlinesize / 2)) {
+				linhaFinal = removerPontuacaoDepois(linhaFinal) + (linhaFinal.equals("") ? "" : " / ")
+						+ Processador.primeiraMaiuscula(removerPontuacaoAntes(linhaTemporaria));
 			} else {
 				linhaFinal += "\n" + linhaTemporaria;
-				
+
 			}
 			linhaTemporaria = "";
 			linhaFinal += "\n";
 		}
-		
-		
+
 		return linhaFinal.trim();
-		
+
 	}
 
 	public void refreshValues() throws Exception {
@@ -152,8 +153,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			cboMomentos.addItem(m);
 		}
 	}
-	
-	private void autoOrganizar(){
+
+	private void autoOrganizar() {
 		txtApresentacao.setText(algoritimoAutoOrganizar(txtApresentacao.getText()));
 	}
 
@@ -166,12 +167,13 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			int lengthLinha = cursorFimLinha - cursorInicioLinha;
 			textoAnterior = jtx.getText();
 			// ultima linha
-			if(cursorFimLinha != textoAnterior.length()){
+			if (cursorFimLinha != textoAnterior.length()) {
 				String textoAntesLinha = textoAnterior.substring(0, cursorFimLinha - 1).trim();
 				textoAntesLinha = removerPontuacaoAntes(textoAntesLinha);
 				String textoDepoisLinha = textoAnterior.substring(cursorFimLinha).trim();
 				textoDepoisLinha = removerPontuacaoDepois(textoDepoisLinha);
-				jtx.setText(Processador.primeiraMaiuscula(textoAntesLinha) + " / " + Processador.primeiraMaiuscula(textoDepoisLinha));
+				jtx.setText(Processador.primeiraMaiuscula(textoAntesLinha) + " / "
+						+ Processador.primeiraMaiuscula(textoDepoisLinha));
 				jtx.setCaretPosition(jtx.getLineStartOffset(numLinha + 1));
 			} else {
 				jtx.setCaretPosition(cursorInicioLinha);
@@ -181,9 +183,9 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			e.printStackTrace();
 		}
 	}
-	
-	private void desfazer(JTextArea jtx){
-		if(textoAnterior == null){
+
+	private void desfazer(JTextArea jtx) {
+		if (textoAnterior == null) {
 			return;
 		}
 		try {
@@ -199,8 +201,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			e.printStackTrace();
 		}
 	}
-	
-	private void fazerRefrao(JTextArea jtx, boolean adicionarRefrao){
+
+	private void fazerRefrao(JTextArea jtx, boolean adicionarRefrao) {
 		try {
 			int posicaoCursor = jtx.getCaretPosition();
 			int numLinha = jtx.getLineOfOffset(posicaoCursor);
@@ -215,28 +217,29 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			int posicaoFimSelecao = jtx.getSelectionEnd();
 			int linhaInicio = jtx.getLineOfOffset(posicaoInicioSelecao);
 			int linhaFim = jtx.getLineOfOffset(posicaoFimSelecao);
-			
+
 			for (int i = linhaInicio; i <= linhaFim; i++) {
-				if(adicionarRefrao){
+				if (adicionarRefrao) {
 					texto = adicionarRefrao(texto, jtx.getLineStartOffset(i));
 				} else {
 					texto = removerRefrao(texto, jtx.getLineStartOffset(i));
 				}
 				jtx.setText(texto);
 			}
-			if(adicionarRefrao){
-				texto = adicionarQuebra(texto,jtx.getLineStartOffset(linhaInicio), jtx.getLineEndOffset(linhaFim),adicionarRefrao);
+			if (adicionarRefrao) {
+				texto = adicionarQuebra(texto, jtx.getLineStartOffset(linhaInicio), jtx.getLineEndOffset(linhaFim),
+						adicionarRefrao);
 				jtx.setText(texto);
 			}
-			
+
 			jtx.setCaretPosition(jtx.getLineStartOffset(linhaInicio));
 			jtx.requestFocus();
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private void removerBarras(JTextArea jtx){
+
+	private void removerBarras(JTextArea jtx) {
 		try {
 			int posicaoCursor = jtx.getCaretPosition();
 			int numLinha = jtx.getLineOfOffset(posicaoCursor);
@@ -251,10 +254,10 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			int posicaoFimSelecao = jtx.getSelectionEnd();
 			int posicaoInicio = jtx.getLineStartOffset(jtx.getLineOfOffset(posicaoInicioSelecao));
 			int posicaoFim = jtx.getLineEndOffset(jtx.getLineOfOffset(posicaoFimSelecao));
-			
+
 			texto = removerBarras(texto, posicaoInicio, posicaoFim);
 			jtx.setText(texto);
-			
+
 			jtx.setCaretPosition(posicaoInicio);
 			jtx.requestFocus();
 		} catch (BadLocationException e) {
@@ -263,7 +266,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	}
 
 	private String removerBarras(String texto, int posicaoInicio, int posicaoFim) {
-		return texto.substring(0,posicaoInicio) + texto.substring(posicaoInicio, posicaoFim).replaceAll(" / ", "\n") + texto.substring(posicaoFim);
+		return texto.substring(0, posicaoInicio) + texto.substring(posicaoInicio, posicaoFim).replaceAll(" / ", "\n")
+				+ texto.substring(posicaoFim);
 	}
 
 	private String adicionarQuebra(String texto, int offsetInicio, int offsetFim, boolean adicionarRefrao) {
@@ -272,22 +276,23 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		String texto2 = texto.substring(offsetInicio, offsetFim).trim();
 		texto2 = texto2.replaceAll("\n\n", "\n");
 		String texto3 = texto.substring(offsetFim).trim();
-		if(offsetInicio != 0){
+		if (offsetInicio != 0) {
 			texto1 += quebra;
 		}
 		return texto1 + texto2 + quebra + texto3;
 	}
 
 	private String adicionarRefrao(String texto, int posicaoStart) {
-		if(texto.charAt(posicaoStart) == '$'){
+		if (texto.charAt(posicaoStart) == '$') {
 			return texto;
 		} else {
-			return texto.substring(0, posicaoStart) + "$" + Processador.primeiraMaiuscula(texto.substring(posicaoStart));
+			return texto.substring(0, posicaoStart) + "$"
+					+ Processador.primeiraMaiuscula(texto.substring(posicaoStart));
 		}
 	}
 
 	private String removerRefrao(String texto, int posicaoStart) {
-		if(texto.charAt(posicaoStart) == '$'){
+		if (texto.charAt(posicaoStart) == '$') {
 			return texto.substring(0, posicaoStart) + texto.substring(posicaoStart + 1);
 		} else {
 			return texto;
@@ -295,7 +300,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 	}
 
 	private String removerPontuacaoDepois(String textoDepoisLinha) {
-		if(textoDepoisLinha.equals("")) {
+		if (textoDepoisLinha.equals("")) {
 			return "";
 		}
 		char firstChar = textoDepoisLinha.charAt(0);
@@ -304,11 +309,11 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			firstChar = textoDepoisLinha.charAt(0);
 		}
 		return textoDepoisLinha;
-		
+
 	}
 
 	private String removerPontuacaoAntes(String textoAntesLinha) {
-		if(textoAntesLinha.equals("")){
+		if (textoAntesLinha.equals("")) {
 			return textoAntesLinha;
 		}
 		char lastChar = textoAntesLinha.charAt(textoAntesLinha.length() - 1);
@@ -318,8 +323,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		}
 		return textoAntesLinha;
 	}
-	
-	private void filtrar() throws Exception{
+
+	private void filtrar() throws Exception {
 		strFiltro = txtFiltro.getText();
 		carregarMomentos(strFiltro);
 	}
@@ -328,7 +333,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		cboMomentos.removeAllItems();
 		Collection<Momento> momentos = null;
 		MomentoDao momentoDao = MomentoDaoFactory.createMomentoDao();
-		if(filtro == null || filtro.equals("")){
+		if (filtro == null || filtro.equals("")) {
 			momentos = momentoDao.listar();
 		} else {
 			momentos = momentoDao.listarMomentosPorFiltroMusica(filtro);
@@ -337,8 +342,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			cboMomentos.addItem(m);
 		}
 	}
-	
-	public void criarNovaMusicaExterno(Momento m){
+
+	public void criarNovaMusicaExterno(Momento m) {
 		cboMomentos.setSelectedItem(m);
 		novaMusica();
 		txtLinkMusica.requestFocus();
@@ -450,66 +455,52 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			e.printStackTrace();
 		}
 	}
-	
-	private void buscar(){
+
+	private void buscar() {
 		try {
 			txtLinkMusica.setText(Processador.getUrlMusica(textoPesquisa, index));
 			imprimirCifraClub();
 			String url = txtLinkMusica.getText();
-			try {
-				String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(url);
-				txtCifraMusica.setText(cifra0eApresentacao1Nome2[0]);
-				txtNomeMusica.setText(cifra0eApresentacao1Nome2[2]);
-				txtCifraMusica.setCaretPosition(0);
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this,
-						"Houve um na conexão com a URL 1:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
-						"ERRO", JOptionPane.ERROR_MESSAGE);
-						
-					e.printStackTrace();
-			}
+			String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(url);
+			txtCifraMusica.setText(cifra0eApresentacao1Nome2[0]);
+			txtNomeMusica.setText(cifra0eApresentacao1Nome2[2]);
+			txtCifraMusica.setCaretPosition(0);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
-					"Houve um na conexão ao tentar processar o texto: " + e.getLocalizedMessage(),
-					"ERRO", JOptionPane.ERROR_MESSAGE);
+					"Houve um na conexão ao tentar processar o texto: " + e.getLocalizedMessage(), "ERRO",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	private void imprimirCifraClub() {
 		String link = txtLinkMusica.getText();
-		link = ((link.contains(".html") ? link.substring(0,link.lastIndexOf("/")) : link) + "/imprimir.html").replaceAll("//imprimir.html", "/imprimir.html");
+		link = ((link.contains(".html") ? link.substring(0, link.lastIndexOf("/")) : link) + "/imprimir.html")
+				.replaceAll("//imprimir.html", "/imprimir.html");
 		txtLinkMusica.setText(link);
 	}
 
-	private void gerar(){
+	private void gerar() {
 		gerar(true);
 	}
-	
+
 	private void gerar(boolean exibirMensagem) {
 		if (txtLinkMusica.getText().contains("cifraclub")) {
 			imprimirCifraClub();
 		}
 		String url = txtLinkMusica.getText();
-		try {
-			String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(url);
-			if (url.contains("https://www.letras.mus.br")){
-				txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
-			} else {
-				txtCifraMusica.setText(cifra0eApresentacao1Nome2[0]);
-				txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
-				txtNomeMusica.setText(cifra0eApresentacao1Nome2[2]);
-			}
-			txtCifraMusica.setCaretPosition(0);
-			txtApresentacao.setCaretPosition(0);
-			if(exibirMensagem){
-				JOptionPane.showMessageDialog(this, "Música processada com sucesso, não se esqueça de salvar...",
-						"Informação", JOptionPane.INFORMATION_MESSAGE);
-			}
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this,
-					"Houve um na conexão com a URL 2:" + url + ",\r\n detalhes tecnicos: " + e.getLocalizedMessage(),
-					"ERRO", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
+		String[] cifra0eApresentacao1Nome2 = Processador.getCifra0EApresentacao1Nome2(url);
+		if (url.contains("https://www.letras.mus.br")) {
+			txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
+		} else {
+			txtCifraMusica.setText(cifra0eApresentacao1Nome2[0]);
+			txtApresentacao.setText(cifra0eApresentacao1Nome2[1]);
+			txtNomeMusica.setText(cifra0eApresentacao1Nome2[2]);
+		}
+		txtCifraMusica.setCaretPosition(0);
+		txtApresentacao.setCaretPosition(0);
+		if (exibirMensagem) {
+			JOptionPane.showMessageDialog(this, "Música processada com sucesso, não se esqueça de salvar...",
+					"Informação", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -522,8 +513,6 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-
 
 	private void continuarMissa() {
 		MissaFreeForm missaFreeForm = (MissaFreeForm) this.menuPrincipal.abrirPanel(NomePanel.FAZER_MISSA2);
@@ -531,7 +520,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 
 	/**
 	 * Create the panel.
-	 * @param menuPrincipal 
+	 * 
+	 * @param menuPrincipal
 	 * 
 	 * @throws Exception
 	 */
@@ -543,7 +533,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
+
 		JLabel lblFiltro = new JLabel("Filtro");
 		GridBagConstraints gbc_lblFiltro = new GridBagConstraints();
 		gbc_lblFiltro.insets = new Insets(0, 0, 5, 5);
@@ -551,7 +541,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		gbc_lblFiltro.gridx = 0;
 		gbc_lblFiltro.gridy = 0;
 		add(lblFiltro, gbc_lblFiltro);
-		
+
 		txtFiltro = new JTextField();
 		txtFiltro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -621,7 +611,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 				novaMusica();
 			}
 		});
-		btnNovaMsica.setIcon(new ImageIcon(CadastroMusicasPanel.class.getResource("/org/tango-project/tango-icon-theme/16x16/actions/document-new.png")));
+		btnNovaMsica.setIcon(new ImageIcon(CadastroMusicasPanel.class
+				.getResource("/org/tango-project/tango-icon-theme/16x16/actions/document-new.png")));
 		GridBagConstraints gbc_btnNovaMsica = new GridBagConstraints();
 		gbc_btnNovaMsica.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNovaMsica.gridx = 2;
@@ -644,7 +635,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 				continuarMissa();
 			}
 		});
-		
+
 		GridBagConstraints gbc_txtLinkMusica = new GridBagConstraints();
 		gbc_txtLinkMusica.insets = new Insets(0, 0, 5, 5);
 		gbc_txtLinkMusica.fill = GridBagConstraints.HORIZONTAL;
@@ -659,7 +650,8 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 				gerar();
 			}
 		});
-		btnGerar.setIcon(new ImageIcon(CadastroMusicasPanel.class.getResource("/org/tango-project/tango-icon-theme/16x16/actions/view-refresh.png")));
+		btnGerar.setIcon(new ImageIcon(CadastroMusicasPanel.class
+				.getResource("/org/tango-project/tango-icon-theme/16x16/actions/view-refresh.png")));
 		GridBagConstraints gbc_btnGerar = new GridBagConstraints();
 		gbc_btnGerar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGerar.insets = new Insets(0, 0, 5, 0);
@@ -690,9 +682,9 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		gbc_txtNomeMusica.gridy = 4;
 		add(txtNomeMusica, gbc_txtNomeMusica);
 		txtNomeMusica.setColumns(10);
-		
+
 		carregarAutoComplete();
-		
+
 		JButton btnBuscar = new JButton("Próxima Cifra");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -751,14 +743,14 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 				ligarLinhas(txtApresentacao);
 			}
 		});
-		
+
 		JButton btnRefro = new JButton("Refr\u00E3o+");
 		btnRefro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fazerRefrao(txtApresentacao, true);
 			}
 		});
-		
+
 		JButton btnAutoOrganizar = new JButton("Auto Organizar");
 		btnAutoOrganizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -767,7 +759,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		});
 		panel.add(btnAutoOrganizar);
 		panel.add(btnRefro);
-		
+
 		JButton btnRefro_1 = new JButton("Refr\u00E3o-");
 		btnRefro_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -775,7 +767,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 			}
 		});
 		panel.add(btnRefro_1);
-		
+
 		JButton btnQuebrar = new JButton("Quebrar");
 		btnQuebrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -784,7 +776,7 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 		});
 		panel.add(btnQuebrar);
 		panel.add(btnLigarLinhas);
-		
+
 		JButton btnDesfazer = new JButton("Desfazer");
 		btnDesfazer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -813,14 +805,14 @@ public class CadastroMusicasPanel extends JPanel implements Painel {
 
 	private void carregarAutoComplete() {
 		new AutoCompleteWindow(txtLinkMusica, 300, false, new AutoCompleteWindow.CustomSearch() {
-			
+
 			@Override
 			public ArrayList<String> customSearcher() {
 				try {
-					if(((Momento)cboMomentos.getSelectedItem()).getNome().equalsIgnoreCase("salmo")){
+					if (((Momento) cboMomentos.getSelectedItem()).getNome().equalsIgnoreCase("salmo")) {
 						return Processador.pesquisarSalmo();
 					}
-					if(txtLinkMusica.getText().startsWith("$")) {
+					if (txtLinkMusica.getText().startsWith("$")) {
 						return Processador.pesquisarLinksLetras(txtLinkMusica.getText());
 					}
 					return Processador.pesquisarLinks(txtLinkMusica.getText());

@@ -17,7 +17,12 @@ public class Musica implements java.io.Serializable {
 	private String link;
 	private Set momentos = new HashSet(0);
 
-	public Musica() {
+	public Musica(String[] cifra0eApresentacao1Nome2, String link) {
+		this.cifra = cifra0eApresentacao1Nome2[0];
+		this.apresentacao = cifra0eApresentacao1Nome2[1];
+		this.nome = cifra0eApresentacao1Nome2[2];
+		this.link = link;
+		
 	}
 
 	public Musica(String nome, String cifra, String apresentacao, String link) {
@@ -33,6 +38,10 @@ public class Musica implements java.io.Serializable {
 		this.apresentacao = apresentacao;
 		this.link = link;
 		this.momentos = momentos;
+	}
+
+	public Musica() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
