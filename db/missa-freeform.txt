@@ -1,7 +1,11 @@
--1:  -1:   Sem Titulo:           Abraço de Pai:                                    https://www.cifraclub.com.br/anjos-de-resgate-musicas/abraco-de-pai/
--1:  -1:   Sem Titulo:           Anjos de Resgate:                                 https://www.cifraclub.com.br/anjos-de-resgate-musicas/anjos-de-resgate/
--1:  -1:   Sem Titulo:           Estou Aqui:                                       https://www.cifraclub.com.br/anjos-de-resgate-musicas/estou-aqui/
--1:  -1:   Sem Titulo:           Exaltado Entre As Nações:                         https://www.cifraclub.com.br/anjos-de-resgate-musicas/exaltado-entre-as-nacoes/
--1:  -1:   Sem Titulo:           Mais Que Amigos:                                  https://www.cifraclub.com.br/anjos-de-resgate-musicas/mais-que-amigos/
-5:   -1:   Salmo:               Sl 18 — Seu som ressoa e se espalha em toda a terra.: https://liturgia.cancaonova.com/pb/liturgia/2a-semana-da-pascoa-sexta-feira-2/?sDia=3&sMes=05&sAno=2019
--1:  -1:   Sem Titulo:           O Senhor É Rei:                                   https://www.cifraclub.com.br/anjos-de-resgate-musicas/o-senhor--rei/
+-1:  -1:   Entrada:                   Meu Coração Me Diz o Amor Me Amou e Se Entregou Por Mim, Jesus Ressuscitou.: https://www.cifraclub.com.br/campanha-da-fraternidade/meu-coracao-me-diz-o-amor-me-amou-e-se-entregou-por-mim-jesus-ressuscitou/
+-1:  -1:   Ato Penitencial:           Kyrie Eleyson JMJ:                                https://www.cifraclub.com.br/banda-renovai-mutua/kyrie-eleyson-jmj/
+-1:  -1:   Aclamacao ao evangelho:    No Princípio Era a Palavra:                       https://www.cifraclub.com.br/catolicas/no-principio-era-a-palavra/cifras/
+-1:  -1:   Ofertório:                 Estar Em Tuas Mãos:                               https://www.cifraclub.com.br/comunidade-catolica-shalom/estar-em-tuas-maos/
+8:   203:  Santo:                     Santo Das Palmas (Dm):                             https://www.cifraclub.com.br/catolicas/santo-das-palmas/imprimir.html
+17:  337:  Cordeiro:                  Cordeiro: C, D, E:                                 <nao tem>
+9:   150:  Comunhão:                  O Pão da Vida, És Tu Jesus :                       http://www.cifraclub.com.br/ministerio-sao-miguel-arcanjo/o-pao-da-vida-es-tu-jesus/imprimir.html
+1:   0:    Novena:                    Louvando a Maria (E):                              http://www.cifraclub.com.br/maria-do-rosario/louvando-a-maria/imprimir.html
+11:  182:  Final:                     Consagração a Nossa Senhora (A):                   http://www.cifraclub.com.br/padre-antonio-maria/consagracao-nossa-senhora/imprimir.html
+-1:  -1:   Final2:                    Ladainha Dos Empobrecidos:                        https://www.cifraclub.com.br/ministerio-gratia-plena/ladainha-dos-empobrecidos/
+-1:  -1:   Final3:                    Porque Ele Vive:                                  https://www.cifraclub.com.br/andre-valadao/por-que-ele-vive/
