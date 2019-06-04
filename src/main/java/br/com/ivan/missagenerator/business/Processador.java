@@ -143,12 +143,13 @@ public class Processador {
 		}
 		return texto.substring(0, 1).toUpperCase() + texto.substring(1);
 	}
-
-	public static ArrayList<String> pesquisarLinks(String searchMusic) {
+	
+	public static ArrayList<String> pesquisarLinksYahoo(String searchMusic){
 		try {
 			ArrayList<String> returnArr = new ArrayList<String>();
 			Document jsoupDoc = Jsoup
-					.connect("http://www.bing.com/search?q=site%3Awww.cifraclub.com.br+imprimir+" + searchMusic).get();
+					.connect("https://br.search.yahoo.com/search?p=Awww.cifraclub.com.br+imprimir+" + searchMusic + "&ei=UTF-8").get();
+			System.out.println("https://br.search.yahoo.com/search?p=Awww.cifraclub.com.br+imprimir+" + searchMusic + "&ei=UTF-8");
 			Elements links = jsoupDoc.select("a[href]");
 			for (Element link : links) {
 				String strLink = link.attr("abs:href");
@@ -163,7 +164,54 @@ public class Processador {
 		}
 	}
 
+	public static ArrayList<String> pesquisarLinks(String searchMusic) {
+		return pesquisarLinksYahoo(searchMusic);
+	}
+
+	public static ArrayList<String> pesquisarLinksBing(String searchMusic) {
+		try {
+			ArrayList<String> returnArr = new ArrayList<String>();
+			Document jsoupDoc = Jsoup
+					.connect("http://www.bing.com/search?q=site%3Awww.cifraclub.com.br+imprimir+" + searchMusic).get();
+			System.out.println("http://www.bing.com/search?q=site%3Awww.cifraclub.com.br+imprimir+" + searchMusic);
+			Elements links = jsoupDoc.select("a[href]");
+			for (Element link : links) {
+				String strLink = link.attr("abs:href");
+				if (strLink.startsWith("https://www.cifraclub.com.br")) {
+					returnArr.add(strLink);
+				}
+			}
+			return returnArr;
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static ArrayList<String> pesquisarLinksLetrasYahoo(String searchMusic) {
+		try {
+			ArrayList<String> returnArr = new ArrayList<String>();
+			Document jsoupDoc = Jsoup.connect("https://br.search.yahoo.com/search?p=Awww.cifraclub.com.br+imprimir+" + searchMusic + "&ei=UTF-8")
+					.get();
+			Elements links = jsoupDoc.select("a[href]");
+			for (Element link : links) {
+				String strLink = link.attr("abs:href");
+				if (strLink.startsWith("https://www.letras.mus.br")) {
+					returnArr.add(strLink);
+				}
+			}
+			return returnArr;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
 	public static ArrayList<String> pesquisarLinksLetras(String searchMusic) {
+		return pesquisarLinksLetrasYahoo(searchMusic);
+	}
+
+	public static ArrayList<String> pesquisarLinksLetrasBing(String searchMusic) {
 		try {
 			ArrayList<String> returnArr = new ArrayList<String>();
 			Document jsoupDoc = Jsoup.connect("http://www.bing.com/search?q=site%3Awww.letras.mus.br+" + searchMusic)

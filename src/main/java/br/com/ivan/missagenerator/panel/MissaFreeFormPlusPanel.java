@@ -481,18 +481,18 @@ public class MissaFreeFormPlusPanel extends JPanel implements Painel {
 		DefaultCompletionProvider provider = new CifraContainsProvider();
 
 		ac = new CifraLineAutoCompletion(provider);
-		ac.addAutoCompletionListener(new AutoCompletionListener() {
-
-			@Override
-			public void autoCompleteUpdate(AutoCompletionEvent e) {
-				if (e.getEventType().equals(Type.POPUP_SHOWN)) {
-				}
-
-				if (e.getEventType().equals(Type.POPUP_HIDDEN)) {
-
-				}
-			}
-		});
+//		ac.addAutoCompletionListener(new AutoCompletionListener() {
+//
+//			@Override
+//			public void autoCompleteUpdate(AutoCompletionEvent e) {
+//				if (e.getEventType().equals(Type.POPUP_SHOWN)) {
+//				}
+//
+//				if (e.getEventType().equals(Type.POPUP_HIDDEN)) {
+//
+//				}
+//			}
+//		});
 
 		ac.install(txtMissa);
 		txtMissa.requestFocus();

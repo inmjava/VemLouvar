@@ -28,6 +28,7 @@ public class CifraContainsProvider extends DefaultCompletionProvider {
 				completions.add(new ShorthandCompletion(this, link, link));	
 			}
 		}
+		System.out.println(this.completions);
 		return this.completions;
 	}
 	

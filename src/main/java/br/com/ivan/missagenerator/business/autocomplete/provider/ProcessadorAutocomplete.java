@@ -109,7 +109,11 @@ public class ProcessadorAutocomplete {
 	}
 
 	public static String getLinhaNomeMusica(String linha) {
-		return linha.split(":")[3].trim();
+		String[] linhaPadrao = linha.split(":");
+//		if(linhaPadrao.length < 3) {
+//			return "fora do padrao";
+//		}
+		return linhaPadrao[3].trim();
 	}
 
 	public static String getLinhaLinkMusica(String linha) {

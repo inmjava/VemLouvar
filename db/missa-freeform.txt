@@ -1,7 +1,10 @@
--1:  -1:   Sem Titulo:           Abraço de Pai:                                    https://www.cifraclub.com.br/anjos-de-resgate-musicas/abraco-de-pai/
--1:  -1:   Sem Titulo:           Anjos de Resgate:                                 https://www.cifraclub.com.br/anjos-de-resgate-musicas/anjos-de-resgate/
--1:  -1:   Sem Titulo:           Estou Aqui:                                       https://www.cifraclub.com.br/anjos-de-resgate-musicas/estou-aqui/
--1:  -1:   Sem Titulo:           Exaltado Entre As Nações:                         https://www.cifraclub.com.br/anjos-de-resgate-musicas/exaltado-entre-as-nacoes/
--1:  -1:   Sem Titulo:           Mais Que Amigos:                                  https://www.cifraclub.com.br/anjos-de-resgate-musicas/mais-que-amigos/
-5:   -1:   Salmo:               Sl 18 — Seu som ressoa e se espalha em toda a terra.: https://liturgia.cancaonova.com/pb/liturgia/2a-semana-da-pascoa-sexta-feira-2/?sDia=3&sMes=05&sAno=2019
--1:  -1:   Sem Titulo:           O Senhor É Rei:                                   https://www.cifraclub.com.br/anjos-de-resgate-musicas/o-senhor--rei/
+-1:  -1:   Entrada:           Eis-me Aqui Senhor:                               https://www.cifraclub.com.br/catolicas/eis-me-aqui-senhor/
+-1:  -1:   Ato Penitencial:           Compadece-te:                                     https://www.cifraclub.com.br/catolicas/compadece-te/
+5:   -1:   Salmo:               Sl 105,6-23 — Lembrai-vos de nós, ó Senhor, segundo o amor para com vosso povo!: https://liturgia.cancaonova.com/pb/liturgia/18a-semana-tempo-comum-quarta-feira-2/?sDia=7&sMes=08&sAno=2019
+-1:  -1:   Aleluia:           Tua Palavra:                                      https://www.cifraclub.com.br/comunidade-catolica-shalom/tua-palavra/
+-1:  -1:   Ofertório:           A Mesa Santa:                                     https://www.cifraclub.com.br/catolicas/a-mesa-santa-que-preparamos-845/
+-1:  -1:   Santo:           O Senhor É Santo:                                 https://www.cifraclub.com.br/catolicas/o-senhor-santo/
+-1:  -1:   Comunhão:           Pão da Igualdade (Se Calarem a Voz Dos Profetas): https://www.cifraclub.com.br/catolicas/se-calarem-voz-dos-profetas/
+1:   0:    Novena:              Louvando a Maria (E):                              http://www.cifraclub.com.br/maria-do-rosario/louvando-a-maria/imprimir.html
+-1:  -1:   Final1:           Ladainha dos empobrecidos:                        https://www.cifraclub.com.br/paulo-roberto/ladainha-dos-empobrecidos/
+-1:  -1:   Final2:           A Escolhida:                                      https://www.cifraclub.com.br/catolicas/a-escolhida/
