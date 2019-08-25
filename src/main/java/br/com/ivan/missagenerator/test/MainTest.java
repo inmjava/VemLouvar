@@ -100,7 +100,7 @@ public class MainTest {
 
 //		carregarMyTest(myRef);
 //		readMyTest(myRef);
-//		readMusicaWrapper(myRef);
+		readMusicaWrapper(myRef);
 //		carregarMusicasEMomentos(myRef);
 //		readOneMusicaWrapper(myRef);
 //		readOneMusicaByValue(myRef);
@@ -132,7 +132,7 @@ public class MainTest {
 
 		Firestore db = getMyFirestoreDataBase();
 
-		ApiFuture<QuerySnapshot> apiFuture = db.collection("musicas").get();
+		ApiFuture<QuerySnapshot> apiFuture = db.collection("musicas").whereEqualTo("nome", "Sl 24").get();
 
 		List<QueryDocumentSnapshot> documents = apiFuture.get().getDocuments();
 		for (DocumentSnapshot document : documents) {
@@ -283,10 +283,9 @@ public class MainTest {
 
 			@Override
 			public void onDataChange(DataSnapshot snapshot) {
-//				for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//					System.out.println(dataSnapshot.getValue(MusicaWrapper.class).getId());
-//				}
-				sw.ds = snapshot;
+				for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+					System.out.println(dataSnapshot.getValue(MusicaWrapper.class).getId());
+				}
 			}
 
 			@Override
@@ -295,19 +294,6 @@ public class MainTest {
 
 			}
 		});
-		while (sw.ds == null) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		DataSnapshot snapshot = sw.ds;
-		for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//			System.out.println(dataSnapshot.getValue(MusicaWrapper.class).getId());
-			System.out.println(dataSnapshot.child("id").getValue());
-		}
 
 	}
 
