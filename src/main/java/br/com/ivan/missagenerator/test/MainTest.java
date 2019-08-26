@@ -1,9 +1,7 @@
 package br.com.ivan.missagenerator.test;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +11,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
@@ -35,6 +32,8 @@ import model.dao.MomentoDao;
 import model.dao.MusicaDao;
 import model.dao.factory.MomentoDaoFactory;
 import model.dao.factory.MusicaDaoFactory;
+import model.dao.impl.MomentoWrapper;
+import model.dao.impl.MusicaWrapper;
 
 public class MainTest {
 
@@ -427,28 +426,19 @@ class SnapshotWrapper {
 	public DataSnapshot ds = null;
 }
 
-class MomentoWrapper {
-	private Long id;
+class MomentoWrapper2 {
+	private String id;
 	private String nome;
 	private List musicas;
 
-	public MomentoWrapper() {
+	private MomentoWrapper2() {
 	}
 
-	public MomentoWrapper(Momento m) {
-		id = m.getId();
-		nome = m.getNome();
-		musicas = new ArrayList();
-		for (Object o : m.getMusicas()) {
-			musicas.add(((Musica) o).getId());
-		}
-	}
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -470,34 +460,22 @@ class MomentoWrapper {
 
 }
 
-class MusicaWrapper {
-	private Long id;
+class MusicaWrapper2 {
+	private String id;
 	private String nome;
 	private String cifra;
 	private String apresentacao;
 	private String link;
-	private List<Long> momentos;
+	private List momentos;
 
-	public MusicaWrapper() {
+	public MusicaWrapper2() {
 	}
 
-	public MusicaWrapper(Musica m) {
-		id = m.getId();
-		nome = m.getNome();
-		cifra = m.getCifra();
-		apresentacao = m.getApresentacao();
-		link = m.getLink();
-		momentos = new ArrayList<>();
-		for (Object o : m.getMomentos()) {
-			momentos.add(((Momento) o).getId());
-		}
-	}
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -533,105 +511,11 @@ class MusicaWrapper {
 		this.link = link;
 	}
 
-	public List<Long> getMomentos() {
+	public List<String> getMomentos() {
 		return momentos;
 	}
 
-	public void setMomentos(List<Long> momentos) {
+	public void setMomentos(List<String> momentos) {
 		this.momentos = momentos;
-	}
-
-	class MomentoWrapper2 {
-		private String id;
-		private String nome;
-		private List musicas;
-
-		private MomentoWrapper2() {
-		}
-
-		public String getId() {
-			return id;
-		}
-
-		public void setId(String id) {
-			this.id = id;
-		}
-
-		public String getNome() {
-			return nome;
-		}
-
-		public void setNome(String nome) {
-			this.nome = nome;
-		}
-
-		public List getMusicas() {
-			return musicas;
-		}
-
-		public void setMusicas(List musicas) {
-			this.musicas = musicas;
-		}
-
-	}
-
-	class MusicaWrapper2 {
-		private String id;
-		private String nome;
-		private String cifra;
-		private String apresentacao;
-		private String link;
-		private List momentos;
-
-		public MusicaWrapper2() {
-		}
-
-		public String getId() {
-			return id;
-		}
-
-		public void setId(String id) {
-			this.id = id;
-		}
-
-		public String getNome() {
-			return nome;
-		}
-
-		public void setNome(String nome) {
-			this.nome = nome;
-		}
-
-		public String getCifra() {
-			return cifra;
-		}
-
-		public void setCifra(String cifra) {
-			this.cifra = cifra;
-		}
-
-		public String getApresentacao() {
-			return apresentacao;
-		}
-
-		public void setApresentacao(String apresentacao) {
-			this.apresentacao = apresentacao;
-		}
-
-		public String getLink() {
-			return link;
-		}
-
-		public void setLink(String link) {
-			this.link = link;
-		}
-
-		public List<String> getMomentos() {
-			return momentos;
-		}
-
-		public void setMomentos(List<String> momentos) {
-			this.momentos = momentos;
-		}
 	}
 }

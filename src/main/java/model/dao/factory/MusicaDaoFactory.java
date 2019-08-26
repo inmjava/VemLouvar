@@ -1,6 +1,7 @@
 package model.dao.factory;
 
 import model.dao.MusicaDao;
+import model.dao.impl.MusicaDaoFirebaseImpl;
 import model.dao.impl.MusicaDaoHibernateImpl;
 
 /**
@@ -12,13 +13,16 @@ import model.dao.impl.MusicaDaoHibernateImpl;
  *
  */
 public class MusicaDaoFactory {
-	
+
 	public static final int HIBERNATE = 0;
+	public static final int FIREBASE = 1;
 	
 	public static MusicaDao createMusicaDao(int whichFactory) {
 		switch (whichFactory) {
 	    	case HIBERNATE: 
 	    		return new MusicaDaoHibernateImpl();
+	    	case FIREBASE:
+	    		return new MusicaDaoFirebaseImpl();
 	    	default:
 			return null;
 		}
