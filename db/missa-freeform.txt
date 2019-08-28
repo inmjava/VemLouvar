@@ -1,11 +1,3 @@
--1:  -1:   Entrada:           Eis-me Aqui Senhor:                               https://www.cifraclub.com.br/catolicas/eis-me-aqui-senhor/
--1:  -1:   Ato Penitencial:           Compadece-te:                                     https://www.cifraclub.com.br/catolicas/compadece-te/
-5:   -1:   Salmo:               Sl 105,6-23 — Lembrai-vos de nós, ó Senhor, segundo o amor para com vosso povo!: https://liturgia.cancaonova.com/pb/liturgia/18a-semana-tempo-comum-quarta-feira-2/?sDia=7&sMes=08&sAno=2019
--1:  -1:   Aleluia:           Tua Palavra:                                      https://www.cifraclub.com.br/comunidade-catolica-shalom/tua-palavra/
--1:  -1:   Ofertório:           A Mesa Santa:                                     https://www.cifraclub.com.br/catolicas/a-mesa-santa-que-preparamos-845/
--1:  -1:   Santo:           O Senhor É Santo:                                 https://www.cifraclub.com.br/catolicas/o-senhor-santo/
--1:  -1:   Comunhão:           Pão da Igualdade (Se Calarem a Voz Dos Profetas): https://www.cifraclub.com.br/catolicas/se-calarem-voz-dos-profetas/
-1:   0:    Novena:              Louvando a Maria (E):                              http://www.cifraclub.com.br/maria-do-rosario/louvando-a-maria/imprimir.html
--1:  -1:   Final1:           Ladainha dos empobrecidos:                        https://www.cifraclub.com.br/paulo-roberto/ladainha-dos-empobrecidos/
--1:  -1:   Final2:           A Escolhida:                                      https://www.cifraclub.com.br/catolicas/a-escolhida/
--1:  -1:   Sem Titulo:           A Mesa Santa:                                     https://www.cifraclub.com.br/catolicas/a-mesa-santa-que-preparamos-845/gzmtgg.html
+2:   null: Entrada:             A Alegria
+10:  null: Ação de Graças:      Quem Perde Sua Vida a Encontrará
+

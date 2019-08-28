@@ -2,6 +2,7 @@ package model.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -21,6 +22,7 @@ public class MomentoDaoFirebaseImpl implements MomentoDao {
 
 	private static final String DB_NAME = "momentos";
 	private static final String DB_NAME_CHILD = "musicas";
+	private HashMap<Long, MusicaWrapper> musicaHash;
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		Firestore db = FirebaseUtils.getMyFirestoreDataBase();
@@ -109,15 +111,29 @@ public class MomentoDaoFirebaseImpl implements MomentoDao {
 	@Override
 	public List listarMusicas(long id) throws Exception {
 		Firestore db = FirebaseUtils.getMyFirestoreDataBase();
+		
+		HashMap<Long, MusicaWrapper> musicaHash = getMusicaHash(db);
+		
 		List<Long> idMusicas = db.collection(DB_NAME).document(id+"").get().get().toObject(MomentoWrapper.class).getMusicas();
 		ArrayList<Musica> musicasList = new ArrayList<>();
 		for (Long idMusica : idMusicas) {
-			db = FirebaseUtils.getMyFirestoreDataBase();
-			CollectionReference collection = db.collection(DB_NAME_CHILD);
-			MusicaWrapper musicaWrapper = collection.document(""+idMusica).get().get().toObject(MusicaWrapper.class);
-			musicasList.add(new Musica(musicaWrapper));
+			musicasList.add(new Musica(musicaHash.get(idMusica)));
 		}
 		return musicasList;
+	}
+
+	private HashMap<Long, MusicaWrapper> getMusicaHash(Firestore db) throws InterruptedException, ExecutionException {
+		if(musicaHash == null) {
+			musicaHash = new HashMap<>();
+			
+			CollectionReference musicasColl = db.collection("musicas");
+			List<QueryDocumentSnapshot> musicasDocuments = musicasColl.get().get().getDocuments();
+			for (QueryDocumentSnapshot queryDocumentSnapshot : musicasDocuments) {
+				MusicaWrapper musicaWrapper = queryDocumentSnapshot.toObject(MusicaWrapper.class);
+				musicaHash.put(musicaWrapper.getId(), musicaWrapper);
+			}
+		}
+		return musicaHash;
 	}
 
 	@Override
