@@ -128,6 +128,10 @@ public class MainTest {
 	}
 
 	public static void main(String[] args) throws Exception {
+		
+	    System.setProperty("https.proxyHost", "oseproxy");
+	    System.setProperty("https.proxyPort", "3128");
+	    System.setProperty("com.google.api.client.should_use_proxy", "true");
 
 		Firestore db = getMyFirestoreDataBase();
 

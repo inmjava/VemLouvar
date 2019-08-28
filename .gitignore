@@ -17,3 +17,4 @@ hs_err_pid*
 /exe/*
 !/exe/jre
 !/exe/vemlouvar.bat
+!/exe/vemlouvar-proxy.bat
