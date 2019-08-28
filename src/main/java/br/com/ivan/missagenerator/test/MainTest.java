@@ -11,6 +11,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
@@ -99,8 +100,8 @@ public class MainTest {
 
 //		carregarMyTest(myRef);
 //		readMyTest(myRef);
-		readMusicaWrapper(myRef);
-//		carregarMusicasEMomentos(myRef);
+//		readMusicaWrapper(myRef);
+		carregarMusicasEMomentos(myRef);
 //		readOneMusicaWrapper(myRef);
 //		readOneMusicaByValue(myRef);
 
@@ -119,6 +120,12 @@ public class MainTest {
 					.setCredentials(GoogleCredentials.fromStream(serviceAccount))
 					.setDatabaseUrl("https://vemlouvar-30a00.firebaseio.com").build();
 
+//			FirestoreOptions options2 = FirestoreOptions.newBuilder()
+//					.setCredentials(GoogleCredentials.fromStream(serviceAccount))
+//					.setTimestampsInSnapshotsEnabled(true)
+//					.build();
+//			Firestore firestore = options2.getService();
+
 			FirebaseApp.initializeApp(options);
 			return FirestoreClient.getFirestore();
 		} catch (IOException e) {
@@ -127,11 +134,11 @@ public class MainTest {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		
-	    System.setProperty("https.proxyHost", "oseproxy");
-	    System.setProperty("https.proxyPort", "3128");
-	    System.setProperty("com.google.api.client.should_use_proxy", "true");
+	public static void main6(String[] args) throws Exception {
+
+		System.setProperty("https.proxyHost", "oseproxy");
+		System.setProperty("https.proxyPort", "3128");
+		System.setProperty("com.google.api.client.should_use_proxy", "true");
 
 		Firestore db = getMyFirestoreDataBase();
 
@@ -140,6 +147,28 @@ public class MainTest {
 		List<QueryDocumentSnapshot> documents = apiFuture.get().getDocuments();
 		for (DocumentSnapshot document : documents) {
 			System.out.println(document.getId() + " => " + document.toObject(MusicaWrapper.class).getNome());
+		}
+
+	}
+
+	public static void main(String[] args) throws Exception {
+
+		System.setProperty("https.proxyHost", "oseproxy");
+		System.setProperty("https.proxyPort", "3128");
+		System.setProperty("com.google.api.client.should_use_proxy", "true");
+
+		Firestore db = getMyFirestoreDataBase();
+
+		CollectionReference momentosColl = db.collection("momentos");
+		CollectionReference musicasColl = db.collection("musicas");
+		List<QueryDocumentSnapshot> documents = momentosColl.get().get().getDocuments();
+		for (QueryDocumentSnapshot queryDocumentSnapshot : documents) {
+			MomentoWrapper momentoWrapper = queryDocumentSnapshot.toObject(MomentoWrapper.class);
+			System.out.println(momentoWrapper.getNome());
+			for (Long idMusica : momentoWrapper.getMusicas()) {
+				System.out.println("\t\t" + musicasColl.document(idMusica.toString()).get().get().toObject(MusicaWrapper.class).getNome());
+			}
+
 		}
 
 	}
