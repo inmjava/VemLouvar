@@ -3,6 +3,7 @@ package br.com.ivan.missagenerator.test;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,7 +12,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
@@ -159,14 +159,23 @@ public class MainTest {
 
 		Firestore db = getMyFirestoreDataBase();
 
-		CollectionReference momentosColl = db.collection("momentos");
+		HashMap<Long, MusicaWrapper> musicaHash = new HashMap<>();
+		
 		CollectionReference musicasColl = db.collection("musicas");
-		List<QueryDocumentSnapshot> documents = momentosColl.get().get().getDocuments();
-		for (QueryDocumentSnapshot queryDocumentSnapshot : documents) {
+		List<QueryDocumentSnapshot> musicasDocuments = musicasColl.get().get().getDocuments();
+		for (QueryDocumentSnapshot queryDocumentSnapshot : musicasDocuments) {
+			MusicaWrapper musicaWrapper = queryDocumentSnapshot.toObject(MusicaWrapper.class);
+			musicaHash.put(musicaWrapper.getId(), musicaWrapper);
+		}
+
+		
+		CollectionReference momentosColl = db.collection("momentos");
+		List<QueryDocumentSnapshot> momentosDocuments = momentosColl.get().get().getDocuments();
+		for (QueryDocumentSnapshot queryDocumentSnapshot : momentosDocuments) {
 			MomentoWrapper momentoWrapper = queryDocumentSnapshot.toObject(MomentoWrapper.class);
 			System.out.println(momentoWrapper.getNome());
 			for (Long idMusica : momentoWrapper.getMusicas()) {
-				System.out.println("\t\t" + musicasColl.document(idMusica.toString()).get().get().toObject(MusicaWrapper.class).getNome());
+				System.out.println("\t\t" );
 			}
 
 		}
