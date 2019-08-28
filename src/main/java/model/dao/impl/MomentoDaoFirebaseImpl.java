@@ -109,7 +109,7 @@ public class MomentoDaoFirebaseImpl implements MomentoDao {
 	@Override
 	public List listarMusicas(long id) throws Exception {
 		Firestore db = FirebaseUtils.getMyFirestoreDataBase();
-		List<Long> idMusicas = db.collection(DB_NAME).get().get().toObjects(MomentoWrapper.class).get(0).getMusicas();
+		List<Long> idMusicas = db.collection(DB_NAME).document(id+"").get().get().toObject(MomentoWrapper.class).getMusicas();
 		ArrayList<Musica> musicasList = new ArrayList<>();
 		for (Long idMusica : idMusicas) {
 			db = FirebaseUtils.getMyFirestoreDataBase();
