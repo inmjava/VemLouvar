@@ -131,7 +131,7 @@ public class MainTest {
 
 		Firestore db = getMyFirestoreDataBase();
 
-		ApiFuture<QuerySnapshot> apiFuture = db.collection("musicas").whereEqualTo("nome", "Sl 24").get();
+		ApiFuture<QuerySnapshot> apiFuture = db.collection("musicas").get();
 
 		List<QueryDocumentSnapshot> documents = apiFuture.get().getDocuments();
 		for (DocumentSnapshot document : documents) {

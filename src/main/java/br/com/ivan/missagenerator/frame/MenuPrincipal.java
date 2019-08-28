@@ -40,7 +40,7 @@ public class MenuPrincipal extends JFrame {
 			public void run() {
 				try {
 					MenuPrincipal frame = new MenuPrincipal();
-					frame.abrirPanel(NomePanel.FAZER_MISSA3);
+					frame.abrirPanel(NomePanel.FAZER_MISSA2);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
