@@ -175,7 +175,7 @@ public class MainTest {
 			MomentoWrapper momentoWrapper = queryDocumentSnapshot.toObject(MomentoWrapper.class);
 			System.out.println(momentoWrapper.getNome());
 			for (Long idMusica : momentoWrapper.getMusicas()) {
-				System.out.println("\t\t" );
+				System.out.println("\t\t" + musicaHash.get(idMusica).getNome());
 			}
 
 		}
