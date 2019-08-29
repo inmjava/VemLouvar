@@ -16,6 +16,10 @@ public class FirebaseUtils {
 
 	public static Firestore getMyFirestoreDataBase() {
 		if (myFirestore == null) {
+			System.setProperty("https.proxyHost", "oseproxy");
+			System.setProperty("https.proxyPort", "3128");
+			System.setProperty("com.google.api.client.should_use_proxy", "true");
+			
 			try {
 				// BasicConfigurator.configure();
 				FileInputStream serviceAccount = new FileInputStream(

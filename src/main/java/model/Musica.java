@@ -49,6 +49,7 @@ public class Musica implements java.io.Serializable {
 	}
 
 	public Musica(MusicaWrapper musicaWrapper) {
+		this.id = musicaWrapper.getId();
 		this.nome = musicaWrapper.getNome();
 		this.cifra = musicaWrapper.getCifra();
 		this.apresentacao = musicaWrapper.getApresentacao();

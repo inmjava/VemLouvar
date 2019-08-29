@@ -1,3 +1,6 @@
-2:   null: Entrada:             A Alegria
-10:  null: Ação de Graças:      Quem Perde Sua Vida a Encontrará
+0:   128:  Interiorização:      Teus planos
+2:   12:   Entrada:             Fico Feliz Em Vir Em Tua Casa
+3:   63:   Ato Penitencial:     Lava-me
+4:   29:   Glória:              Glória a Deus na imensidão
+5:   163:  Salmo:               Sl 110
 
